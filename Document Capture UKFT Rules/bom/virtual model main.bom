@@ -1,0 +1,31 @@
+
+property uuid "46ac4ab8-578e-46f6-aac0-6ce2f2b232d7"
+
+public class Helpers_Main
+{
+    public static void addMessage(string msg);
+    public static string businessName(string arl_string);
+    public static boolean containsAnyOfCaseInsensitive(string source, java.lang.String[] targetList);
+    public static boolean containsCaseInsensitive(string source, string target);
+    public static int containsFuzzy(string source, string target);
+    public static boolean containsNoneOfCaseInsensitive(string source, java.lang.String[] targetList);
+    public static boolean containsWildcard(string source, string textBefore, string textAfter);
+    public static metadata.DataItem dataItemGet(string key);
+    public static double dataItemGetNumeric(string key);
+    public static string dataItemGetValue(string key);
+    public static void dataItemSetDefaults(string key, string value);
+    public static void dataItemSetDetails(string itemName, string location, string confidence, string comment);
+    public static void dataItemSetValue(string key, string value);
+    public static string dateToString(java.util.Date date);
+    public static string extractCrossReferenceAfter(string source, string refName);
+    public static string extractFirstRegexMatch(string expression, string source);
+    public static string getAllFollowingIndents(baca.Block block);
+    public static string getBoldPhraseInBlock(baca.Block block);
+    public static string location(baca.Page page, baca.Block block);
+    public static void log(string message);
+    public static java.util.Date parseDateString(string dateString, string format);
+    public static string removeSpaces(string source);
+    public static double stringAsNumber(string arg);
+    public static boolean stringMatchesRegex(string arg, string regex);
+}
+

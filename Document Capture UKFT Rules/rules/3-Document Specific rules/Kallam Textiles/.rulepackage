@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>Kallam Textiles</name>
+  <uuid>00ae396d-d679-462a-84b2-03f7c383b965</uuid>
+</ilog.rules.studio.model.base:RulePackage>

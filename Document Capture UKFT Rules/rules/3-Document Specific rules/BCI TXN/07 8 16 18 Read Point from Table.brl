@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>07 8 16 18 Read Point from Table</name>
+  <uuid>e42a1c61-c5af-404c-b9ce-0cbfec3bcbfa</uuid>
+  <documentation><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set Table to a table in the tables of Page ;
+    set NameRow to a table row in the rows of Table
+            where the complete text of the first cell of this table row is "Name" ;
+    set AddressRow to a table row in the rows of Table
+            where the complete text of the first cell of this table row is "Address" ;
+    set CountryRow to a table row in the rows of Table
+            where the complete text of the first cell of this table row is "Country" ;
+    set SELLER to the complete text of the cell at column 2 in NameRow + ", " + 
+    			  the complete text of the cell at column 2 in AddressRow + ", " + 
+    			  the complete text of the cell at column 2 in CountryRow ;
+	set BUYER to the complete text of the cell at column 4 in NameRow + ", " + 
+				 the complete text of the cell at column 4 in AddressRow + ", " + 
+				 the complete text of the cell at column 4 in CountryRow;     			  
+then
+    set the data item value of "Read Point" to SELLER ;
+    set the data item value of "BizLocation" to SELLER ;
+    set the data item value of "Source" to SELLER ;
+    set the data item value of "Destination" to  BUYER;
+	set SellerCountry to the complete text of the cell at column 2 in CountryRow ;]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Table to a table in the tables of PAGE1  
+            where the number of elements in the rows of this table is at most 6 ;
+    set NameRow to a table row in the rows of Table
+            where the complete text of the first cell of this table row is "Name" ;
+    set AddressRow to a table row in the rows of Table
+            where the complete text of the first cell of this table row is "Address" ;
+    set PostcodeRow to a table row in the rows of Table
+            where the index of this table row is the index of AddressRow   + 1 ;
+    set CountryRow to a table row in the rows of Table
+            where the complete text of the first cell of this table row is "Country" ;
+    set SELLER to the complete text of cell 2 in NameRow + ", "
+    	 + the complete text of cell 2 in AddressRow + ", " 
+    	 + the complete text of cell 2 in PostcodeRow + ", " 
+    	 + the complete text of cell 2 in CountryRow ;
+     set BUYER to the complete text of cell 4 in NameRow + ", "
+    	 + the complete text of cell 4 in AddressRow + ", " 
+    	 + the complete text of cell 4 in PostcodeRow + ", " 
+    	 + the complete text of cell 4 in CountryRow ;            
+then
+    set the data item value of "Read Point" to SELLER ;
+    set the data item value of "BizLocation" to SELLER ;
+    set the data item value of "Source" to SELLER ;
+    set the data item value of "Destination" to  BUYER;
+	set SellerCountry to the complete text of cell 2 in CountryRow ;
+	add message "Buyer/Seller names were not wrapped";]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

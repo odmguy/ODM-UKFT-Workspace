@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Classification - Kantar</name>
+  <uuid>c80bbc17-031d-4856-9f13-7e748901f482</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set Block to a block in the blocks of Page;
+if
+    the complete text of Block contains any of { "Kantar" }
+then
+    add message "Classification set to 'Kantar'" ;
+    set the document classification of 'the response'  to "Kantar" ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

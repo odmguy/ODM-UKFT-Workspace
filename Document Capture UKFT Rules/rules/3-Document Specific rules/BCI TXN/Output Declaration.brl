@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Output Declaration</name>
+  <uuid>719fd2b8-b90f-4608-b9a7-8213ea926625</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set 'Page' to a page in the pages of 'the document' 
+       where the page number of this page is at most 1 ;
+    set 'Block' to a block in the blocks of Page 
+       where the complete text of this block contains "Output Declaration" ;
+    set 'Order' to extract  NUMBER_REGEX from the complete text of Block ;
+then
+    set the data item value of "Output Declaration Number" to Order ;
+    set the confidence of the data item "Output Declaration Number" to "high";
+    set the location of the data item "Output Declaration Number" to 
+    	"Page:" + the page number of Page + the location of Order in Block;
+    	
+
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

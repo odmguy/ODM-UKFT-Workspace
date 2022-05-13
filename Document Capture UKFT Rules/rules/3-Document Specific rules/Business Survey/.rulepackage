@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>Business Survey</name>
+  <uuid>eca38614-00af-4d9b-960d-761626081e9c</uuid>
+</ilog.rules.studio.model.base:RulePackage>

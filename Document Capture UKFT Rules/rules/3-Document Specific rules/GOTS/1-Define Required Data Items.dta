@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.dt:DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.dt="http://ilog.rules.studio/model/dt.ecore">
+  <name>1-Define Required Data Items</name>
+  <uuid>aaa5d79f-301b-418b-90a9-5ca899100b79</uuid>
+  <locale>en_US</locale>
+  <definition>
+<DT Version="7.0" xmlns="http://schemas.ilog.com/Rules/7.0/DecisionTable">
+  <Body>
+    <Properties>
+      <Property Name="UI.AutoResizeTable" Type="xs:boolean"><![CDATA[false]]></Property>
+    </Properties>
+    <Structure>
+      <ConditionDefinitions>
+        <ConditionDefinition Id="C2">
+          <Properties>
+            <Property Name="Check.Expression" Type="xs:boolean"><![CDATA[false]]></Property>
+            <Property Name="Check.Gap" Type="xs:boolean"><![CDATA[false]]></Property>
+            <Property Name="Check.Overlap" Type="xs:boolean"><![CDATA[false]]></Property>
+          </Properties>
+          <ExpressionDefinition>
+            <Text><![CDATA[true is <a boolean>]]></Text>
+          </ExpressionDefinition>
+        </ConditionDefinition>
+      </ConditionDefinitions>
+      <ActionDefinitions>
+        <ActionDefinition Id="A0">
+          <ExpressionDefinition>
+            <Text><![CDATA[set the data item details of <a string> location to "" confidence to "missing" comment to ""]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+      </ActionDefinitions>
+    </Structure>
+    <Contents>
+      <Partition DefId="C2">
+        <Condition>
+          <Expression>
+            <Param><![CDATA[true]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["CountryOfDispatch"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA[true]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["CertificateReference"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA[true]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["CertifiedWeightKG"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA[true]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["GrossWeightKG"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA[true]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["NetWeightKG"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA[true]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["DateDespatched"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA[true]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["PlaceDespatched"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression/>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression/>
+            </Action>
+          </ActionSet>
+        </Condition>
+      </Partition>
+    </Contents>
+  </Body>
+  <Resources DefaultLocale="en_US">
+    <ResourceSet Locale="en_US">
+      <Data Name="Definitions(A0)#HeaderText"><![CDATA[Define Data Item]]></Data>
+      <Data Name="Definitions(A0)#Width"><![CDATA[327]]></Data>
+      <Data Name="Definitions(C2)#HeaderText"><![CDATA[Active?]]></Data>
+      <Data Name="Definitions(C2)#Width"><![CDATA[160]]></Data>
+    </ResourceSet>
+  </Resources>
+</DT>
+</definition>
+</ilog.rules.studio.model.dt:DecisionTable>

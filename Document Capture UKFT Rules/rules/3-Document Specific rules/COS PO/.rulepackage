@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>COS PO</name>
+  <uuid>e53026c5-2f8f-4e1f-bd96-ba452e1856d0</uuid>
+</ilog.rules.studio.model.base:RulePackage>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Low Quality OCR warning</name>
+  <uuid>41c1c13c-67c7-4202-996c-bb114fe07136</uuid>
+  <documentation><![CDATA[]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set 'Page' to a page in the pages of 'the document' ;
+    set 'Para' to a block in the blocks of Page ;
+	set 'Line' to a line in the lines of Para ;
+if
+    there is at least one word in the words of Line
+            where the word OCRConfidence of this word contains "1" ,
+    and there is no string in the messages of 'the response'  
+    		where this string starts with "LOW_OCR_Quality",
+then
+    add message "LOW_OCR_Quality - found at least one character with quality 1"  ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

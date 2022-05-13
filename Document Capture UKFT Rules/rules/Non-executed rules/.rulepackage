@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>Non-executed rules</name>
+  <uuid>cb90d6c7-c6bf-4208-8868-add1edfee0ae</uuid>
+</ilog.rules.studio.model.base:RulePackage>

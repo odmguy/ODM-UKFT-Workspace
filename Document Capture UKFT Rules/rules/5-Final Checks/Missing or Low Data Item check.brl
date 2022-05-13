@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Missing or Low Data Item check</name>
+  <uuid>4ddcbd41-b0b0-4d97-83bd-34a5391adf0b</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Item to a data item in the data items of 'the response'
+            where the confidence of this data item is one of { "missing" , "low" } ;
+then
+    add message "Required "+the document classification of 'the response' +
+    				" Data Item [" + the key of Item + "] is missing or low confidence" ;
+    set the overall result of 'the response' to "incomplete" ;
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

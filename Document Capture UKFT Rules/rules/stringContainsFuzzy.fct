@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.rule:Function xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.rule="http://ilog.rules.studio/model/rule.ecore">
+  <name>stringContainsFuzzy</name>
+  <uuid>7688b236-eca3-4a6a-9179-d56ca7926a50</uuid>
+  <returnType>int</returnType>
+  <definition><![CDATA[String sourceL = source.toLowerCase();
+String targetL = target.toLowerCase();
+// -- Exact match
+if (sourceL.contains(targetL)) {
+	return 10;
+}
+
+// -- Check individual Words
+String[] words = targetL.split(" ");
+int numWords = words.length; 
+int numExactMatches = 0;
+int numFuzzyMatches = 0;
+int firstMatchIndex = numWords;
+int lastMatchIndex = 0;
+for ( int loop = 0; loop < numWords; loop++) {
+	if (sourceL.contains(words[loop])) 
+	{
+		numExactMatches++;
+		if (loop > lastMatchIndex) lastMatchIndex = loop;
+		if (loop < firstMatchIndex) firstMatchIndex = loop;
+	}
+}
+
+if (numExactMatches == 0) return 0;
+
+int proximity = lastMatchIndex - firstMatchIndex; // -- So will be negative if zero matches 
+if (numExactMatches == numWords) {
+	if (proximity <= numWords * 2)
+		return 8; // -- All words appear in source within double the lenght of the string 
+				  // -- so if target string is 3 words long they appeared within 6 words of each other in source.
+	else
+		return 6; // -- All words appear in source but in diff order
+} 
+else if (numExactMatches > numWords/2) // -- At least half the words were found
+	return 3;
+else if (numExactMatches > 0) // -- At least one word found
+	return 1;
+else	
+	return 0;
+]]></definition>
+  <arguments name="source" type="java.lang.String"/>
+  <arguments name="target" type="java.lang.String"/>
+</ilog.rules.studio.model.rule:Function>

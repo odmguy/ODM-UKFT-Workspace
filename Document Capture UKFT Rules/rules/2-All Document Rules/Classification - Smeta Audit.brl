@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Classification - Smeta Audit</name>
+  <uuid>1d86f787-497b-48cd-920a-2e160e024b7f</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 2 ;
+    set Block to a block in the blocks of Page ;
+if
+    the complete text of Block contains any of { "Sedex Audit Reference" }
+then
+    add message "Classification set to 'SMETA Audit'" ;
+     set the document classification of 'the response'  to "SMETA Audit" ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

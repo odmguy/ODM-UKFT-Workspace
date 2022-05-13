@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>GOTS</name>
+  <uuid>adc575e4-7006-4bbc-ad41-86153036c748</uuid>
+</ilog.rules.studio.model.base:RulePackage>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>No Missing Data Items</name>
+  <uuid>5ab9e163-353d-42cb-ae2e-0ce530548f05</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[if
+    there is no data item in the data items of 'the response'
+            where the confidence of this data item is one of { "missing" , "low" } ,  
+then
+    add message "All Required " + the document classification of 'the response' + 
+    				" Data Items have been found - 100% Success";
+    set the overall result of 'the response' to "100%" ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Classification - Water Testing</name>
+  <uuid>f515a249-f32c-4689-b396-813728be83ce</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set Block to a block in the blocks of Page ;
+if
+    the complete text of Block contains any of { "softlines wastewater testing" }
+then
+    add message "Classification set to 'WaterTesting'" ;
+    set the document classification of 'the response'  to "WaterTesting" ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

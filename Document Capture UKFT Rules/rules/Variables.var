@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:VariableSet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>Variables</name>
+  <uuid>e2280a3f-c1d5-4f35-b0e7-816af93989c5</uuid>
+  <variables name="today" type="java.util.Date" initialValue="new java.util.Date()" verbalization="TODAY"/>
+  <variables name="projectVersion" type="java.lang.String" initialValue="&quot;9 May 2022&quot;" verbalization="VERSION"/>
+  <variables name="loopPageIndex" type="int" initialValue="0" verbalization=""/>
+  <variables name="loopCurrentPage" type="baca.Page" initialValue="" verbalization=""/>
+  <variables name="sellerCountry" type="java.lang.String" initialValue="&quot;&quot;" verbalization="SellerCountry"/>
+  <variables name="progressiveReportItem" type="java.lang.String" initialValue="&quot;&quot;" verbalization="ProgressiveItem"/>
+  <variables name="dataOutputDirectory" type="java.lang.String" initialValue="&quot;C:/ACCOUNTS/UKFT/BCI Files/Balaji Industries-1003928-1&quot;" verbalization=""/>
+  <variables name="onBoarding" type="boolean" initialValue="false" verbalization="OnBoarding"/>
+  <variables name="page1" type="baca.Page" initialValue="" verbalization="PAGE1"/>
+  <variables name="client_in" type="java.lang.String" initialValue="&quot;unset&quot;" verbalization="TheClient"/>
+  <variables name="options_in" type="java.lang.String" initialValue="&quot;&quot;" verbalization=""/>
+  <variables name="document_in" type="baca.Document" initialValue="" verbalization="the document"/>
+  <variables name="odmResponse_out" type="metadata.ODMResponse" initialValue="new metadata.ODMResponse()" verbalization="the response"/>
+</ilog.rules.studio.model.base:VariableSet>

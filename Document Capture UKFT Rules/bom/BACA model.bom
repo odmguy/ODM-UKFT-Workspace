@@ -1,0 +1,441 @@
+
+property loadGetterSetterAsProperties "false"
+property origin "xom:/Document Capture UKFT Rules//Document Capture UKFT XOM"
+property uuid "bdf5e5d3-9afe-4ba4-ab97-9834c5c60ec8"
+package baca;
+
+
+public class AIOutput
+{
+    public string Label;
+    public int Page;
+    public baca.Result[] Result;
+    public AIOutput();
+}
+
+public class Barcode
+{
+    public int BarCodeHeight;
+    public string BarCodeNo;
+    public int BarCodeStartX;
+    public int BarCodeStartY;
+    public int BarCodeWidth;
+    public Barcode();
+}
+
+public class Block
+{
+    public int BlockHeight;
+    public string BlockID;
+    public int BlockStartX;
+    public int BlockStartY;
+    public int BlockWidth;
+    public baca.Line[] LineList;
+    public Block();
+    public string getCompleteText();
+    public baca.Line getFirstLine();
+    public string getFirstLineText();
+    public int getIndexOfLine(baca.Line arg);
+    public string getLocation();
+    public int getNumberOfLines();
+    public int getNumberOfWords();
+    public string getTextConfidence(string arg);
+    public string getTextLocation(string arg);
+    public string lineXText(int arg);
+}
+
+public class Cell
+{
+    public java.util.List CellHeaderAttributes domain 0,* class baca.CellHeaderAttributes;
+    public double CellHeight;
+    public string CellID;
+    public double CellStartX;
+    public double CellStartY;
+    public double CellWidth;
+    public java.util.List LineList domain 0,* class baca.Line;
+    public Cell();
+    public string getCompleteText();
+    public baca.Line getFirstLine();
+    public string lineXText(int arg);
+}
+
+public class CellHeaderAttributes
+{
+    public string ClassName;
+    public string Confidence;
+    public string HeaderText;
+    public string SemanticMatch;
+    public CellHeaderAttributes();
+}
+
+public class Classification
+{
+    public baca.DocumentClass DocumentClass;
+    public java.lang.String[] DocumentLanguage;
+    public baca.Model Model;
+    public baca.PageTitle PageTitle;
+    public java.lang.String[] warnings;
+    public Classification();
+}
+
+public class DSOutput
+{
+    public string Content;
+    public string DocumentClass;
+    public string DocumentClassMatch;
+    public string DocumentName;
+    public double OCRAccuracy;
+    public baca.SegmentEnd SegmentEnd;
+    public baca.SegmentStart SegmentStart;
+    public string Timestamp;
+    public string Title;
+    public string TransactionID;
+    public DSOutput();
+}
+
+public class Document
+{
+    public baca.AIOutput[] AIOutput;
+    public baca.Classification Classification;
+    public string CustomerCode;
+    public string CustomerUniqueIdentifier;
+    public baca.DSOutput[] DSOutput;
+    public string DocumentArrivalTime;
+    public string DocumentExtension;
+    public string DocumentName;
+    public double DocumentOCRConfidence;
+    public baca.Error[] ErrorList;
+    public baca.ExtraInformation ExtraInformation;
+    public baca.MandatoryInformation MandatoryInformation;
+    public int UserID;
+    public string analyzerId;
+    public string createDate;
+    public baca.Page[] pageList;
+    public Document();
+    public string getActualClassification();
+    public string getCompleteText();
+    public int getNumberOfPages();
+}
+
+public class DocumentClass
+{
+    public string Actual;
+    public string ClassMatch;
+    public java.lang.String[] ClassificationWords;
+    public string Code;
+    public double Confidence;
+    public int ID;
+    public DocumentClass();
+}
+
+public class Error
+{
+    public baca.ErrorDetail[] errors;
+    public int page_number;
+    public Error();
+}
+
+public class ErrorDetail
+{
+    public string error_code;
+    public string message;
+    public ErrorDetail();
+}
+
+public class ExtraInformation
+{
+    public string artbox;
+    public string author;
+    public string bleedbox;
+    public string creationdate;
+    public string creator;
+    public string cropbox;
+    public string encrypted;
+    public string file_size;
+    public string form;
+    public string javascript;
+    public string keywords;
+    public string mediabox;
+    public string moddate;
+    public string optimized;
+    public double page_rot;
+    public string page_size;
+    public int pages;
+    public double pdf_version;
+    public string producer;
+    public string subject;
+    public string suspects;
+    public string tagged;
+    public string title;
+    public string trimbox;
+    public string userproperties;
+    public ExtraInformation();
+}
+
+public class Header
+{
+    public string BlockNo;
+    public string HeaderClass;
+    public string HeaderConfidence;
+    public string HeaderText;
+    public string LineNo;
+    public int LineStartX;
+    public int LineStartY;
+    public int PageNo;
+    public Header();
+}
+
+public class KVP
+{
+    public string EditedValue;
+    public string Key;
+    public string KeyClass;
+    public string KeyClassConfidence;
+    public double KeyConfidence;
+    public int KeyHeight;
+    public int KeyStartX;
+    public int KeyStartY;
+    public int KeyWidth;
+    public string Mandatory;
+    public boolean ObjectDetectionMatch;
+    public int PageNumber;
+    public double Sensitivity;
+    public string ValidatorResult;
+    public string Value;
+    public double ValueConfidence;
+    public int ValueHeight;
+    public int ValueStartX;
+    public int ValueStartY;
+    public int ValueWidth;
+    public KVP();
+}
+
+public class Line
+{
+    public string LineFontFace;
+    public int LineHeight;
+    public string LineID;
+    public int LineStartX;
+    public int LineStartY;
+    public int LineWidth;
+    public java.util.List WordList domain 0,* class baca.Word;
+    public Line();
+    public string getCompleteText();
+    public string getFirstUnderlinedPhrase();
+    public string getFirstWord();
+}
+
+public class LineHeaderAttributes
+{
+    public string HeaderClass;
+    public string HeaderConfidence;
+    public string HeaderText;
+    public LineHeaderAttributes();
+    public string toString();
+}
+
+public class LineItem
+{
+    public baca.LineItemValue[] KVPs;
+    public int LineItemID;
+    public LineItem();
+}
+
+public class LineItemGroup
+{
+    public java.lang.String[] Headers;
+    public int LineItemGroupID;
+    public baca.LineItem[] LineItems;
+    public LineItemGroup();
+    public string cellValue(int row, int col);
+    public string cellValueFromHeader(int row, string headerLabel);
+    public int numberOfColumns();
+    public int numberOfRows();
+}
+
+public class LineItemValue
+{
+    public string Key;
+    public string Value;
+    public LineItemValue();
+}
+
+public class MandatoryInformation
+{
+    public string Code;
+    public string Color;
+    public string Description;
+    public MandatoryInformation();
+}
+
+public class Model
+{
+    public int ModelID;
+    public string ModelName;
+    public string PublishedDate;
+    public Model();
+}
+
+public class Page
+{
+    public baca.Barcode[] BarcodeList;
+    public baca.Block[] BlockList;
+    public baca.Header[] HeaderList;
+    public baca.KVP[] KVPTable;
+    public baca.PageInfo PageInfo;
+    public baca.TableLineItems[] TableLineItems;
+    public baca.Table[] TableList;
+    public int TotalGoodLetters;
+    public int TotalLetters;
+    public Page();
+    public boolean blocksHaveSameIndentation(baca.Block arg1, baca.Block arg2);
+    public boolean blocksHaveSameWidth(baca.Block arg1, baca.Block arg2);
+    public int getBlockIndex(baca.Block arg);
+    public string getCompleteText();
+    public int getPageNumber();
+    public baca.Block nextBlock(baca.Block arg);
+    public baca.Block nextContinuingParagraph(baca.Block arg1, baca.Document arg2);
+}
+
+public class PageInfo
+{
+    public boolean Blank;
+    public java.lang.String[] Language;
+    public int PageHeight;
+    public string PageID;
+    public int PageNo;
+    public double PageOCRConfidence;
+    public int PageStartX;
+    public int PageStartY;
+    public int PageWidth;
+    public int dpix;
+    public int dpiy;
+    public PageInfo();
+}
+
+public class PageTitle
+{
+    public string Confidence;
+    public java.lang.String[] Title;
+    public string Trained;
+    public PageTitle();
+}
+
+public class Result
+{
+    public string code;
+    public Result();
+}
+
+public class SegmentEnd
+{
+    public int EndPage;
+    public int EndX;
+    public int EndY;
+    public SegmentEnd();
+}
+
+public class SegmentStart
+{
+    public int StartPage;
+    public int StartX;
+    public int StartY;
+    public SegmentStart();
+}
+
+public class Table
+{
+    public java.util.List RowList domain 0,* class baca.TableRow;
+    public double TableHeight;
+    public string TableID;
+    public double TableStartX;
+    public double TableStartY;
+    public double TableWidth;
+    public Table();
+    public baca.Cell getCellToRight(int arg1, baca.Cell arg2, baca.TableRow arg3);
+    public baca.TableRow getFirstRow();
+    public baca.TableRow getLastRow();
+    public baca.TableRow getRowX(int arg);
+}
+
+public class TableLineItems
+{
+    public baca.LineItemGroup[] LineItemGroups;
+    public string TableID;
+    public TableLineItems();
+}
+
+public class TableRow
+{
+    public java.util.List CellList domain 0,* class baca.Cell;
+    public double RowHeight;
+    public string RowID;
+    public double RowStartX;
+    public double RowStartY;
+    public double RowWidth;
+    public TableRow();
+    public baca.Cell getCellFromIndex(int arg);
+    public string getCompleteText();
+    public string getCompleteTextOfCell(int arg);
+    public baca.Cell getFirstCell();
+    public int getIndex();
+    public int getIndexOfCell(baca.Cell arg);
+    public string getLocation();
+    public baca.Cell getNextCell(baca.Cell arg);
+}
+
+public class Word
+{
+    public int WordCharN;
+    public string WordFontSize;
+    public int WordFontSizeGroup;
+    public int WordHeight;
+    public string WordID;
+    public string WordOCRConfidence;
+    public int WordStartX;
+    public int WordStartY;
+    public string WordValue;
+    public int WordWidth;
+    public string bold;
+    public string italic;
+    public string underlined;
+    public Word();
+    public boolean isVerticallyAligned(baca.Word arg);
+}
+
+package metadata;
+
+
+public class DataItem
+{
+    public string comment;
+    public string confidence;
+    public string key;
+    public string location;
+    public string value;
+    public DataItem(string arg1, string arg2);
+}
+
+public class ODMResponse
+{
+    public string analyzerID;
+    public java.util.Vector dataItemList domain 0,* class metadata.DataItem;
+    public string documentClassification;
+    public string documentClassificationConfidence;
+    public string documentName;
+    public int documentNumPages;
+    public boolean errorsOccurred;
+    public java.util.Vector messages domain 0,* class string;
+    public double ocrAccuracy;
+    public string overallResult;
+    public java.util.Date processingDate;
+    public ODMResponse();
+    public void exportDataToFile(string arg);
+    public metadata.DataItem getDataItem(string key);
+    public string getDataItemValue(string key);
+    public double getItemValueAsNumber(string key);
+    public static string getNewUUID();
+    public void setDataItemDetails(string key, string location, string confidence, string comment);
+    public void setDataItemValue(string key, string value);
+}
+

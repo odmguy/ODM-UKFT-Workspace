@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>1-Inital Processing</name>
+  <uuid>6ee61a09-d875-47ee-9b49-d73f64960fc2</uuid>
+</ilog.rules.studio.model.base:RulePackage>

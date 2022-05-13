@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>On-boarding - Display Table details</name>
+  <uuid>272ccc30-5a9b-4ebb-a140-8d1c8aa3a5fa</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is between 1 and 5 ;
+    set Table to a table in the tables of Page ;
+    set Row to a table row in the rows of Table ; 
+if
+    OnBoarding  
+then
+    add message "Page " + the page number of Page + " " + the table ID of Table  + " "+the row ID of Row +": " + the complete text of Row  ; 
+    ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

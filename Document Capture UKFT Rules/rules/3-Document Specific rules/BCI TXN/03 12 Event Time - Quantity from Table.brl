@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>03 12 Event Time - Quantity from Table</name>
+  <uuid>bdd693d2-91cd-452a-8018-1da860cd329b</uuid>
+  <documentation><![CDATA[    set parameter "Quantity" to the complete text of the cell at column 3 in DateRow ;     ]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is at most 2 ;
+    set Table to a table in the tables of Page ;
+    set FirstRow to a table row in the rows of Table
+            where the row ID of this table row is "row_0"
+            and the complete text of the first cell of this table row starts with "Date" ;
+    set DateRow to a table row in the rows of Table
+            where the complete text of the first cell of this table row matches "[0-9]{1,2}-[0-9]{1,2}-[0-9]{2,4}" ;
+then
+    add message "Event Date from "+the table ID of Table +" = "+ the complete text of the first cell of DateRow  ;
+    set the data item value of "Event Time" to parse the complete text of the first cell of DateRow using "dd-MM-yy" as a string ;
+    set the data item value of "Quantity" to the complete text of the cell at column 3 in DateRow ;
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

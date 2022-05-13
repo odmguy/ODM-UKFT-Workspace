@@ -1,0 +1,445 @@
+﻿<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+    <title>IBM CP4BA Capture & Decisions Demo</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <link rel="shortcut icon" href="./images/ibm.ico">
+
+    <script>
+        $(document).ready(function () {
+            // ######################################################
+            // ###     USER SPECIFIC VARIABLES TO EDIT HERE       ###
+            // ######################################################
+            var ODM_ProcessBacaDocument_ServiceURL = "http://localhost:9090/DecisionService/rest/v1/ContentAnalyzer/ProcessUKFTDocument/OPENAPI?format=JSON";
+            var ODM_ProcessBacaDocument_EMEA01ServiceURL = "https://odm-dev-demo-emea-01.automationcloud.ibm.com/DecisionService/rest/v1/ContentAnalyzer/ProcessUKFTDocument/OPENAPI?format=JSON";
+			var ODM_BASIC_AUTH_EMEA01 = "Basic b2RtLXVrZnQuZmlkQHQ3OTIwOm9wUmpURVM4aWV0VkFRSVVjdW5SdWJhS0J1dWRCSWkzNnc2blN6WHM=";  // -- for odm-ukft.fid@t7920
+//            var BACA_URL = "<insert your CA instance 'Request URL' here - from the API page>"  +  "/contentAnalyzer";
+//            var BACA_API_KEY = "<insert your CA API key here from the API page>"; 
+            var BACA_URL = "https://bacademo-mt47.bpm.ibmcloud.com/backendbaca1/ca/rest/content/v1"  +  "/contentAnalyzer";
+            var BACA_API_KEY = "YzYxMGQ4MjctMTI3OS00MmNmLWJiOWEtZTYzMTI1M2MzZjg1O3Q0NDAxO29udDE="; 
+            var BACA_BASIC_AUTH = "Basic dWtmdC5maWRAdDQ0MDE6eWRIQ3UzU2hRZXdwMGxRUUxNcXN3bHVxSGpUTE0zU1Z3MUxEZFdGeg=="; // -- For 'ukft.fid@t4401'
+            // ######################################################
+
+            var ODM_REQUEST;		// -- JSON format request payload for ODM call
+            var BACA_DOC_ID = "";
+            var BACA_REQUEST;
+            var BACA_RESPONSE;
+ 			var JSON_TEXT = "";
+            var HTTP_CLIENT = new XMLHttpRequest();  // -- See  https://www.w3schools.com/Js/js_ajax_http.asp or https://attacomsian.com/blog/http-requests-xhr
+            HTTP_CLIENT.withCredentials = true; // -- Required to avoid Cross Origin error ????
+
+            //  **************************************************
+            //  Upload File
+            //              Call BACA with Filename for processing start
+            // -- CHECK THIS for HTML5 FILE handling with drag and drop !!! - https://www.html5rocks.com/en/tutorials/file/dndfiles/
+            //  **************************************************
+            $('#Upload').click(function () {
+                if (document.getElementById("Filename").files[0] == null) {
+                    log("\nPlease select a file to upload");
+                    return;
+                }
+                log("\nUploading file ...");
+
+                var data = new FormData();
+                data.append("responseType", "\"json\"");
+//                data.append("jsonOptions", "\"ocr\",\"dc\",\"kvp\",\"sn\",\"mt\",\"hr\",\"th\",\"ai\",\"ds\"");
+                data.append("jsonOptions", "\"ocr\",\"dc\",\"kvp\",\"sn\",\"mt\",\"hr\",\"th\",\"ds\"");
+                data.append("file", document.getElementById("Filename").files[0]);
+
+				var forcedClassification = document.getElementById("Classification").value;
+				if (forcedClassification != "") {
+					log("   Attempting to set Classification to "+forcedClassification);
+             		data.append("docClass", forcedClassification);
+             	} 
+
+                HTTP_CLIENT.open("POST", BACA_URL, false); // -- false implies synchronous call
+                HTTP_CLIENT.setRequestHeader("apiKey", BACA_API_KEY);
+                HTTP_CLIENT.setRequestHeader('Accept', 'application/json');
+                HTTP_CLIENT.setRequestHeader("Access-Control-Allow-origin","*");
+                HTTP_CLIENT.setRequestHeader("Content-Type", "multipart/form-data");
+                HTTP_CLIENT.setRequestHeader("Authorization", BACA_BASIC_AUTH);
+                
+                // ------- MAKE THE CALL ------
+                HTTP_CLIENT.send(data);
+
+                if (HTTP_CLIENT.status == 200) {
+                    log("Call to UPLOAD FILE returned status = 200. Call was OK but File Upload failed. This is some kind of certificate/security error - see browser log.");
+                }
+                else if (HTTP_CLIENT.status == 202) {
+                    // log(">>>>> RESPONSE  = \n" + HTTP_CLIENT.responseText);
+                    BACA_RESPONSE = JSON.parse(HTTP_CLIENT.responseText);
+                    log("Call to UPLOAD "+BACA_RESPONSE.data.fileNameIn+" succeeded");
+                    BACA_DOC_ID = BACA_RESPONSE.data.analyzerId;
+                    log("  - Doc analyserId  = " + BACA_RESPONSE.data.analyzerId);
+                    $("#DocID").val(BACA_DOC_ID);
+                }
+                else {
+                    log("## BACA Call to UPLOAD FILE failed - [" + HTTP_CLIENT.status + " " + HTTP_CLIENT.statusText + "]");
+                    log("## Errors = [" + HTTP_CLIENT.responseText + "]");
+                }
+            });
+
+            //  **************************************************
+            //  Check Status
+            //      Check if the file just uploaded has finished
+            //  **************************************************
+            $('#Status').click(function () {
+                if ($("#DocID").val() == null || $("#DocID").val() == "") {
+                    log("\nNo ID was specified. Please enter an ID or upload a document to generate one.");
+                    return;
+                }
+
+                if (BACA_DOC_ID == "") { // --  Get value typed into UI so when the upload fails then take the key manually entered in the Text field
+                    BACA_DOC_ID = $("#DocID").val();
+                }
+
+				// -- Get the processing Status. Append a random number to end of URL to avoid response being cached !!!
+                HTTP_CLIENT.open("GET", BACA_URL + "/" + BACA_DOC_ID+"?_="+Math.round(Math.random()*10000), false);
+                HTTP_CLIENT.setRequestHeader("apikey", BACA_API_KEY);
+                HTTP_CLIENT.setRequestHeader("Authorization", BACA_BASIC_AUTH);
+                
+                log("\nChecking processing status of file with ID " + BACA_DOC_ID);
+                // -- MAKE THE CALL ---
+                HTTP_CLIENT.send(BACA_REQUEST);
+
+                if (HTTP_CLIENT.status == 200) {
+                    /****
+                    // -- Sample responseText is:
+                        {"status":{"code":200,"messageId":"CIWCA11107","message":"Successfully retrieved the content analyzer
+                        details"},"data":{"analyzerId":"cbfe9490-ec3d-11e9-bfb4-25cc0b28a3ac","uniqueId":"","creationDate":"2019-10-11T15:42:57.893Z","fileName":"TE
+                        ST-180330.pdf","numPages":2,"statusDetails":[{"type":"JSON","status":"Completed","timeElapsed":"25.087283
+                            s","completedPages":2,"progress":100}]}}
+                     ****/
+                    var BACA_RESPONSE = JSON.parse(HTTP_CLIENT.responseText);
+                    log(" - Call to BACA STATUS check succeeded");
+                    log(" - Filename  = " + BACA_RESPONSE.data.fileName);
+                    log(" - Num Pages  = " + BACA_RESPONSE.data.numPages);
+                    log(" - Status = " + BACA_RESPONSE.data.statusDetails[0].status);
+                    log(" - Progress = " + BACA_RESPONSE.data.statusDetails[0].progress+"%");
+					if (BACA_RESPONSE.data.statusDetails[0].progress == 100) {
+						var startTime = new Date(BACA_RESPONSE.data.statusDetails[0].startTime);
+						var endTime = new Date(BACA_RESPONSE.data.statusDetails[0].endTime);
+						var diff = endTime - startTime;
+	                    log(" - Processing time = " + Math.round(diff / 1000)+ " seconds" );
+					}
+                    
+                }
+                else {
+                    if (HTTP_CLIENT.status == 404) {
+                        log("> The DocumentID was not found. It may have been deleted");
+                    }
+                    else {
+                        log("## BACA Check Status Call failed - [" + HTTP_CLIENT.status + " " + HTTP_CLIENT.statusText + "]");
+                        log("## Errors = [" + HTTP_CLIENT.responseText + "]");
+                    }
+                }
+            });
+
+
+             //  **************************************************
+            //  GetJSON -  
+            //      Call BACA to get the JSON payload of the scanned doc/image
+            //      Store it in a variable so we can call the rules muliple times without having to refetch
+            //  **************************************************
+            $('#GetJSON').click(function () {
+                log("\nGetting the Document Scanning result JSON from BACA...");
+
+               // ---------------------------------
+                // -- CALL BACA to get JSON PAYLOAD
+                // ---------------------------------
+                HTTP_CLIENT.open("GET", BACA_URL + "/" + BACA_DOC_ID + "/json", false);
+                HTTP_CLIENT.setRequestHeader("apikey", BACA_API_KEY);
+                HTTP_CLIENT.setRequestHeader("Authorization", BACA_BASIC_AUTH);
+                HTTP_CLIENT.setRequestHeader("accept", "application/json");
+                BACA_REQUEST = "";
+
+                // -- MAKE THE CALL ---
+                HTTP_CLIENT.send(BACA_REQUEST);
+//                log("## Call finished - [" + HTTP_CLIENT.status + "] [" + HTTP_CLIENT.responseText + "] ");
+
+                if (HTTP_CLIENT.status == 200) {
+                    // -- WARNING - this might be large
+                    JSON_TEXT = HTTP_CLIENT.responseText;
+//                     log("JSON_TEXT in GetJSON = \n\n"+JSON_TEXT);
+
+//                    var BACA_STRING_RESPONSE = HTTP_CLIENT.responseText;
+                    // -- Now convert mixed types of sensitivity values in KVPs to be all integers as some values are 'false' instead of '0'
+                    var rex = new RegExp('Sensitivity":false', 'g');
+                    JSON_TEXT = JSON_TEXT.replace(rex, 'Sensitivity":0');
+
+                    // -- Another varying datatype issue
+                    // -- Usually the PageInfo.Language field is a list of strings such as - "Language": [ "en", "de", "sv" ],
+                    // -- but occasionally (such as a low OCR case) it may be empty but BACA returns an empty string rather than an empty array which Jackson cannot parse into a string array
+                    // -- So global search and replace any    "Language": "",      to "Language": [],
+                    rex = new RegExp('Language": ""', 'g');
+                    JSON_TEXT = JSON_TEXT.replace(rex, 'Language": []');
+                    rex = new RegExp('Language":""', 'g');
+                    JSON_TEXT = JSON_TEXT.replace(rex, 'Language":[]');
+
+                    var BACA_RESPONSE = JSON.parse(JSON_TEXT);
+
+                    var KVP_TABLE = BACA_RESPONSE.data.pageList[0].KVPTable;
+                    log(" - Document Filename       = " + BACA_RESPONSE.data.DocumentName+" - with " + BACA_RESPONSE.data.ExtraInformation.pages + " pages");
+                    log(" - Unique BACA ID            = " + BACA_DOC_ID);
+                    // log(" - Document Classified as  = " + BACA_RESPONSE.data.Classification.DocumentClass.Actual); // -- Value is not being used by the rules
+                }
+                else {
+                    if (HTTP_CLIENT.status == 404 && HTTP_CLIENT.responseText.indexOf("in progress") !== -1) {
+                        log("> The processing is still in progress. Please resubmit the request after the status is completed");
+                    }
+                    else if ((HTTP_CLIENT.status == 404) && HTTP_CLIENT.responseText.indexOf("Not Found") !== -1) {
+                        log("> Content not found. It has probably been deleted");
+                    }
+                    else {
+                        log("## BACA GET JSON failed - [" + HTTP_CLIENT.status + " " + HTTP_CLIENT.statusText + "]");
+                        log("## Errors = [" + HTTP_CLIENT.responseText + "]");
+                    }
+                    return;
+                }
+            });
+
+
+
+            //  **************************************************
+            //  ANALYSE DOCUMENT - "CallODM" 
+            //      Call BACA to get the JSON payload of the scanned doc/image
+            //      Call ODM with the payload to get the Analysis
+            //
+            //  **************************************************
+            $('#CallODM').click(function () {
+				var RES = document.getElementById("RES").value;
+            	log("\nCalling ODM Business rules to analyse document on "+RES+" ...");
+				JSON_OBJECT = JSON.parse(JSON_TEXT);
+                // ---------------------------------
+                // -- Now call ODM with selected elements of JSON PAYLOAD
+                // ---------------------------------
+				if (RES == "localhost") {
+                	HTTP_CLIENT.open("POST", ODM_ProcessBacaDocument_ServiceURL, false);
+            	}
+            	else {  
+                	HTTP_CLIENT.open("POST", ODM_ProcessBacaDocument_EMEA01ServiceURL, false);
+                    HTTP_CLIENT.setRequestHeader("Authorization", ODM_BASIC_AUTH_EMEA01); // -- odm-ukft.fid@t7920
+            	}
+                HTTP_CLIENT.setRequestHeader("Content-Type", "application/json");
+                
+                ODM_REQUEST = "{";
+                ODM_REQUEST = ODM_REQUEST + "\"__DecisionID__\": \"" + BACA_DOC_ID + "\", ";
+//                ODM_REQUEST = ODM_REQUEST + "\"metaData_inout\": {";
+//                ODM_REQUEST = ODM_REQUEST + "   \"dynamicParams\": \"\"";
+                //ODM_REQUEST = ODM_REQUEST + " },";
+                ODM_REQUEST = ODM_REQUEST + "\"document_in\": " + JSON.stringify(JSON_OBJECT.data) + " ";
+                ODM_REQUEST = ODM_REQUEST + "}";
+
+//////                log("ODMRequest = <<<<<<<<<<<<<<<<<<<<<<<\n" + ODM_REQUEST + "\n>>>>>>>>>>>>>>>>>>>>>>");
+
+                HTTP_CLIENT.send(ODM_REQUEST);
+                if (HTTP_CLIENT.status == 200) {
+                	// ---------------------------------
+                	// -- Call to ODM Succeeded so Parse the response into JSON object and show results in Text Area
+                	// ---------------------------------
+                    var json_obj = JSON.parse(HTTP_CLIENT.responseText);
+//                    log(HTTP_CLIENT.responseText);
+                    log("Document Analysis Rules complete");
+                    log(" - Overall Result = " + json_obj.odmResponse_out.overallResult);
+                    log(" - Document Classification= " + json_obj.odmResponse_out.documentClassification);
+                    log(" - Number of DataItems  = "+json_obj.odmResponse_out.dataItemList.length);
+                    for (var msg = 0; msg < json_obj.odmResponse_out.dataItemList.length; msg=msg+1) {
+                    	var ib = json_obj.odmResponse_out.dataItemList[msg];
+                       	log("         [" + ib.confidence+"] "+ib.key+" = '"+ib.value+"' @"+ib.location+ " : "+ib.comment);
+                    }
+                    log("");
+                    
+                    log(" - Validation Messages:");
+                    for (var msg = 0; msg < json_obj.odmResponse_out.messages.length; msg++) {
+                        log("    - " + json_obj.odmResponse_out.messages[msg]);
+                    }
+                }
+                else {
+                    log("\n## ODM Call failed - [" + HTTP_CLIENT.statusText + "]\n Please check the '" + ODMServerURL + "' rule service is running.\nIf it is then check the server log for a malformed request format.");
+                }
+                return null;
+
+            });
+
+            //  **************************************************
+            //  DELETE
+            //      Delete the data from a submitted Document
+            //  **************************************************
+            $('#Delete').click(function () {
+                log("\nDeleting data for DOC ID " + BACA_DOC_ID);
+
+                HTTP_CLIENT.open("DELETE", BACA_URL + "/" + BACA_DOC_ID, false);
+                HTTP_CLIENT.setRequestHeader("apikey", BACA_API_KEY);
+                HTTP_CLIENT.setRequestHeader("Authorization", BACA_BASIC_AUTH);
+
+                // -- MAKE THE CALL ---
+                HTTP_CLIENT.send(BACA_REQUEST);
+                if (HTTP_CLIENT.status == 200) {
+                    var BACA_RESPONSE = JSON.parse(HTTP_CLIENT.responseText);
+                    log("Call to BACA DELETE succeeded");
+                    BACA_DOC_ID = "";
+                    $("#DocID").val(BACA_DOC_ID);
+                }
+                else {
+                    if (HTTP_CLIENT.status == 404) {
+                        log("> The DocumentID was not found or already deleted");
+                    }
+                    else {
+                        log("## BACA DELETE Call failed - [" + HTTP_CLIENT.status + " " + HTTP_CLIENT.statusText + "]");
+                        log("## Errors = [" + HTTP_CLIENT.responseText + "]");
+                    }
+                }
+            });
+
+            //  **************************************************
+            //  LOAD JSON from File-  
+            //      Load the chosen JSON file and store it in a variable
+            //      i.e. Run the demo without a BACA connection
+            //  **************************************************
+            $('#GetJSONFile').click(function () {
+                if (document.getElementById("Filename").files[0] == null) {
+                    log("\nPlease select a JSON file to load");
+                    return;
+                }
+				log("Loading JSON directly from file...");
+				log("   For now these files must be the complete response from BACA - not just the document");
+
+				let file = document.getElementById("Filename").files[0];
+				let reader = new FileReader();
+				reader.readAsText(file);
+                log("File Loaded and ready for Call ODM");
+
+				reader.addEventListener('load', function(e) {					
+					JSON_TEXT = e.target.result;
+					//log("JSON Contents = \n"+JSON_TEXT);
+
+                    // -- Now convert mixed types of sensitivity values in KVPs to be all integers as some values are 'false' instead of '0'
+                    var rex = new RegExp('Sensitivity":false', 'g');
+                    JSON_TEXT = JSON_TEXT.replace(rex, 'Sensitivity":0');
+
+                    // -- Another varying datatype issue
+                    // -- Usually the PageInfo.Language field is a list of strings such as - "Language": [ "en", "de", "sv" ],
+                    // -- but occasionally (such as a low OCR case) it may be empty but BACA returns an empty string rather than an empty array which Jackson cannot parse into a string array
+                    // -- So global search and replace any    "Language": "",      to "Language": [],
+                    rex = new RegExp('Language": ""', 'g');
+                    JSON_TEXT = JSON_TEXT.replace(rex, 'Language": []');
+                    rex = new RegExp('Language":""', 'g');
+                    JSON_TEXT = JSON_TEXT.replace(rex, 'Language":[]');
+                	
+				});
+				// -- NOTE !!! ANY code here will be called BEFORE the Event Listener above
+
+
+            });
+
+  
+            //  **************************************************
+            //  CLEAR
+            //      Empty the response text area
+            //  **************************************************
+            $('#Clear').click(function () {
+                $("#TextArea").val("");
+            });
+
+            //  **************************************************
+            //  InstanceURL
+            //      Update the Content Analyzer REST API endpoint URL
+            //  **************************************************
+            $('#InstanceURL').click(function () {
+				var newURL = prompt("Enter your ContentAnalyzer API URL", BACA_URL);
+				if (newURL != null)
+					BACA_URL = newURL  +  "/contentAnalyzer";
+            });
+
+            //  **************************************************
+            //  APIKey
+            //      Update the Content Analyzer API Key
+            //  **************************************************
+            $('#APIKey').click(function () {
+				var newAPIKey = prompt("Enter your ContentAnalyzer v1.3 APIKEY", BACA_API_KEY);
+				if (newAPIKey != null)
+					BACA_API_KEY = newAPIKey;
+            });
+
+            //  **************************************************
+            //  Authenticate
+            //      Update the Content Analyzer OAth key e.g. "Bearer a321f84254..."
+            //  **************************************************
+            $('#Authenticate').click(function () {
+				var newCreds = prompt("Enter your Basic Authentication Credentials", BACA_BASIC_AUTH);
+				if (newCreds != null)
+                    BACA_BASIC_AUTH = newCreds;
+            });
+
+
+            //  **************************************************
+            //  LOG - write a message to the TextBox including newline
+            //  **************************************************
+            function log(message) {
+                var text = document.getElementById("TextArea");
+                //                text.value = text.value + message+"\n";
+                $("#TextArea").val($("#TextArea").val() + message + "\n");
+                text.scrollTop = text.scrollHeight;
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <!--#####################################################################################################################################-->
+    <!--#####################################################################################################################################-->
+    <!--#####################################################################################################################################-->
+    <h2>UKFT MVP - Textile document Data Capture UI</h2>
+    <!-- ************************************************** -->
+    <!-- 	Input form                  						-->
+    <!-- ************************************************** -->
+
+    <br>
+    <h4 id="PageID">Select the file to process with BACA and ODM:</h4>
+    <input type="File" id="Filename" value="Filename" name="Filename" style="width:600px">
+   	&nbsp;&nbsp;&nbsp;  <input type="text" id="Classification" value="" name="Classification"> DocClass
+    
+    <br>    <br>
+    <button id="Upload" style="font-size: 16px; background-color: lightgrey; width: 120px; height: 25px;">Upload File</button>
+    <button id="Status" style="font-size: 16px; background-color: lightgrey; width: 140px; height: 25px;">Check Status</button>
+    <button id="GetJSON" style="font-size: 16px; background-color: lightgrey; width: 140px; height: 25px;">Get JSON</button>
+    <button id="CallODM" style="font-size: 16px; background-color: lightgreen; width: 160px; height: 25px;">Call ODM</button>
+    <button id="Delete" style="font-size: 16px; background-color: lightgrey; width: 100px; height: 25px;">Delete</button>
+    <button id="GetJSONFile" style="font-size: 16px; background-color: lightblue; width: 160px; height: 25px;">Get JSON from file</button>
+    <br><br />
+    <input type="text" id="DocID" value="" name="DocID" style="width:400px"> : Analyser ID
+    <br />
+
+    <h4 id="PageID">  </h4>
+    <table id="ResponseTable" style="background-color: lightgrey; font-size: 14px">
+        <!-- 	We will leave the table empty to start as it will be dynamically populated			-->
+    </table>
+    <!-- ************************************************** -->
+    <!-- Execution and results form                 		-->
+    <!-- ************************************************** -->
+
+    <table style="background-color: lightgrey; font-weight: bold;">
+        <tr>
+            <td>Responses:</td>
+        </tr>
+        <tr>
+            <td>
+                <textarea rows="30" id="TextArea" style="font-size: 14px; width: 900px;" readonly></textarea>
+            </td>
+        </tr>
+    </table>
+    <button id="Clear" style="font-size: 10px; background-color: lightgrey; width: 75px; height: 20px;">Clear</button>
+    &nbsp;&nbsp;
+    <button id="InstanceURL" style="font-size: 10px; background-color: lightgrey; width: 75px; height: 20px;">InstanceURL</button>
+    <button id="APIKey" style="font-size: 10px; background-color: lightgrey; width: 75px; height: 20px;">APIKey</button>
+    <button id="Authenticate" style="font-size: 10px; background-color: lightgrey; width: 75px; height: 20px;">Authenticate</button>
+	&nbsp;&nbsp;
+	<label for="RES">Choose a RES:</label>
+	<select name="RES" id="RES">
+	  <option value="localhost">localhost</option>
+	  <option value="EMEA01">EMEA01</option>
+	</select>
+</body>
+</html>

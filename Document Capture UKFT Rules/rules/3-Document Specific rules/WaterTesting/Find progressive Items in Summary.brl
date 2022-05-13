@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Find progressive Items in Summary</name>
+  <uuid>bd6c4212-adf9-4d95-a307-d1ce3466369d</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is less than 3 ;
+    set Table to a table in the tables of Page;
+    set HeaderRow to a table row in the rows of Table
+            where the row ID of this table row is "row_1"
+            and the complete text of the first cell of this table row contains "Foundational" ignoring case ;
+    set DataRow to a table row in the rows of Table
+            where the row ID of this table row is not "row_0"
+            and the row ID of this table row is not "row_1" ;
+if
+	the complete text of the cell at column 2 in DataRow is "X"
+then
+    set ProgressiveItem to the complete text of the first cell of DataRow;
+    add message "Progressive Summary result found for " + ProgressiveItem;
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

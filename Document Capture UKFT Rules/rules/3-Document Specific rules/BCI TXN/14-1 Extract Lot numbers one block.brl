@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>14-1 Extract Lot numbers one block</name>
+  <uuid>e55dad92-8287-4be2-ae1b-0ae156737abc</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is at most 2 ;
+    set Block to a block in the blocks of Page
+            where the complete text of this block contains any of { "lot number" , "lot no.", "lot n0" } ;
+    set FirstLot to extract "([0-9]+)" from the text of line 2 of Block ;
+if
+    FirstLot is not empty
+then
+    set the data item value of "Lot" to FirstLot ;
+    set the location of the data item "Lot" to "Page:"+ the page number of Page+the location of Block; 
+    set the confidence of the data item "Lot" to "high";
+    set the comment of the data item "Lot" to "Used Lot rule v1";
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

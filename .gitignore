@@ -1,0 +1,22 @@
+.metadata
+
+BACA Connector/.settings
+BACA Connector/bin
+BACA Connector/.settings
+BACA Connnector.jar
+
+Demo-webapp/bin/
+Demo-webapp/build/
+Demo-webapp/classes/
+
+Document Capture UKFT Rules/.settings
+Document Capture UKFT Rules/output/
+Document Capture UKFT Rules/reports/
+Document Capture UKFT Rules/resources/xom-libraries/
+
+Document Capture UKFT XOM/.settings
+Document Capture UKFT XOM/bin/
+
+console log.lnk
+EclipseLogViewerRules.xml
+server-list.xml

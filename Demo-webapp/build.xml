@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<project name="Business rules demo web application" default="all" basedir=".">
+	
+	<!-- Environment properties -->
+ 
+	<!--  ===========================================================  -->
+	<!--  ==== TODO EDIT THIS WITH YOUR ODM 8.10.x WLP install dir ====  -->
+	<!--  ===========================================================  -->
+    <property name="wlp.home" value="C:\ibm\odm8.10.2 wlp\wlp\usr\servers\odm81020" />         
+
+	<property name="ds.home" value="${basedir}/../../.." />
+	<property file="${ds.home}/shared/samplesServer/was/build.properties"/>
+    <property file="${data.home}/was.properties" />
+	
+	<!-- Entry point -->
+    <target name="all" depends="war,installwlp" />
+
+	<!-- Initialize property variable -->
+    <target name="init">
+		<!-- Build -->
+        <property name="src.dir" value="./src" />
+        <property name="classes.dir" value="./classes" />
+        <property name="descriptor.dir" value="./src/WebContent/WEB-INF" />
+        <property name="build.dir" value="build" />
+        <property name="ear.dir" value="${build.dir}" />
+
+    	<!-- Project properties -->
+        <property file="build.properties" />
+        <property name="appwar" value="baca-demo.war" />
+    	
+		<!-- JSP -->
+        <property name="websrc" location="${src.dir}/WebContent" />
+        <path id="project.classpath">
+            <pathelement path="${classes.dir}" />
+        </path>
+
+    	<!-- Reset build folder -->
+    	<delete failonerror="false">
+            <fileset dir="${build.dir}" includes="**/*.class" />
+        </delete>
+        <mkdir dir="${build.dir}" />
+    </target>
+	
+	<!-- Compile Java classes -->
+    <target name="compile" depends="init">
+		<!-- Reset classes folder -->
+    	<delete failonerror="false">
+            <fileset dir="${classes.dir}" includes="**/*.class" />
+        </delete>
+        <mkdir dir="${classes.dir}" />
+    	
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" verbose="off" fork="true" debug="on" includeantruntime="false">
+            <classpath refid="project.classpath" />
+        </javac>
+    	
+
+    </target>
+	
+	<!-- Package the Web Application into a WAR file -->
+    <target name="war" depends="init, compile">
+        <war destfile="${build.dir}/${appwar}" webxml="${descriptor.dir}/web.xml">
+            <fileset dir="${websrc}" includes="js/**/*.*" />
+            <fileset dir="${websrc}" includes="images/**/*.*" />
+            <fileset dir="${websrc}" includes="css/**/*.*" />
+            <fileset dir="${websrc}" includes="*.jsp" />
+        	<fileset dir="${websrc}" includes="*.html" />
+            <classes dir="${classes.dir}" includes="demo/*.*" />
+        	<!-- including additional libraries in web application -->
+        	<!-- lib dir="./lib" includes="sample.jar" /-->
+        	<!-- lib dir="${executionserver.home}/lib" includes="jrules-engine*.jar" /-->
+        </war>
+    </target>
+	
+	<!-- ==== Deploy application to Liberty ODM Sample server ==== --> 
+    <target name="installwlp" depends="war">
+    	<delete file="${wlp.home}/dropins/${appwar}" />
+    	<sleep milliseconds="2000" />
+    	<copy file="${build.dir}/${appwar}"   todir="${wlp.home}/dropins" overwrite="true"   />
+    </target>	
+	
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>07 08 16 Read Point Seller from Block</name>
+  <uuid>0e24b238-8bf0-4bb2-8c4e-b15afb23dd0a</uuid>
+  <documentation><![CDATA[    add message "Detected Seller country as '"+ SellerCountry +"'";
+    add message "Name line text "+ the line ID of NameLine  +" = " + the complete text of NameLine  ;			]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set Block to a block in the blocks of Page ;
+    set Line to a line in the lines of Block
+            where the complete text of this line matches ".*(Se[li][li]er).*" ;
+    set SELLER to extract "(?:Se[li][li]er )(.+)" from the complete text of Line ;
+if
+    SELLER is not empty
+then
+    set the data item value of "Read Point" to SELLER ;
+    set the data item value of "BizLocation" to SELLER ;
+    set the data item value of "Source" to SELLER ;
+else
+	add message "Failed to extract Seller from " + the complete text of Line ;    ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

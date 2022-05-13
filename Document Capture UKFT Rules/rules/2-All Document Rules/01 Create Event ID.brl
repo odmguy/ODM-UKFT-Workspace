@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>01 Create Event ID</name>
+  <uuid>36451079-6cf3-43b7-9b88-7d0cbe335811</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[then
+	set data item "Event ID" default value to the new UUID ; 
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

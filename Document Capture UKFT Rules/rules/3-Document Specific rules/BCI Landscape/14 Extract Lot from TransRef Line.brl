@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>14 Extract Lot from TransRef Line</name>
+  <uuid>56998c3a-790c-40fa-b72e-62cc03255018</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Block to a block in the blocks of PAGE1 ;
+    set Line to a line in the lines of Block
+            where the complete text of this line starts with "Transaction ref"
+            and the complete text of this line contains "Lot" ;
+    set LOT to extract "([0-9\\.]{2,})" from the complete text of Line ;
+if
+    LOT is not empty
+then
+    set the data item value of "Lot" to LOT ;
+    set the location of the data item "Lot" to "Page:1"+the location of Block; 
+    set the confidence of the data item "Lot" to "high";
+    set the comment of the data item "Lot" to "Used TransRef Line rule";
+    add message "Lot from 'TransRef Line' = " + LOT ;
+    
+    ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

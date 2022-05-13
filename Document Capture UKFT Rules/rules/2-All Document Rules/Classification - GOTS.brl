@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Classification - GOTS</name>
+  <uuid>5379d827-eb95-4cad-88bc-47a0ed828fff</uuid>
+  <documentation><![CDATA[    set the actual of the document class of the classification of 'the document' to "GOTS" ;
+]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set Block to a block in the blocks of Page
+            where the block ID of this block is "block_0" ;
+if
+    the complete text of Block contains any of { "GOTS", "GLOBAL ORGANIC TEXTILE STANDARD" }
+then
+    add message "Classification set to 'GOTS'" ;
+    set the document classification of 'the response' to "GOTS" ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

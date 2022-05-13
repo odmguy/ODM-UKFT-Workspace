@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Certified Weight from Table</name>
+  <uuid>7a7724a9-60b4-4e6a-8b25-8d365b85aae3</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document' ;
+    set Table to a table in the tables of Page ;
+    set Row to a table row in the rows of Table ;
+    set Cell to a cell in the cells of Row
+            where the complete text of the first line of this cell contains any of { "Certified weight" } ;
+	set Weight to extract WEIGHT_EXPRESSION from the text of line 2 of Cell  ;
+then
+    set the data item value of "CertifiedWeightKG" to Weight  ; ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>02-Units of Measure warning</name>
+  <uuid>e216594b-9d85-4890-a6fa-1ebd77901150</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[then
+     add message "WARNING - Quantity UoM is " + "BCCU rather than KGM";    
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

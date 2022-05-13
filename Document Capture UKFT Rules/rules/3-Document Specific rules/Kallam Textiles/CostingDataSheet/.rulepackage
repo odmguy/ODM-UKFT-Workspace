@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.base:RulePackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.base="http://ilog.rules.studio/model/base.ecore">
+  <name>CostingDataSheet</name>
+  <uuid>d92ee61d-9e99-4c56-8f4d-477af96ec546</uuid>
+</ilog.rules.studio.model.base:RulePackage>

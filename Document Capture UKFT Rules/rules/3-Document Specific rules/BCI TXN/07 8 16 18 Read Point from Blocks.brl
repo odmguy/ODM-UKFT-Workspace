@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>07 8 16 18 Read Point from Blocks</name>
+  <uuid>9c9c3787-4fde-455e-8e37-ac5ca5cb19e8</uuid>
+  <documentation><![CDATA[    add message "Detected Seller country as '"+ SellerCountry +"'";
+    add message "Name line text "+ the line ID of NameLine  +" = " + the complete text of NameLine  ;			]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set NameBlock to a block in the blocks of Page 
+	        where the complete text of this block contains "Name" ;
+	set NameLine to a line in the lines of NameBlock 
+			where the complete text of this line contains "Name"; 	        
+    set AddressBlock to a block in the blocks of Page
+            where the complete text of this block contains "Address" ;
+    set CountryBlock to a block in the blocks of Page
+            where the complete text of this block contains "Country" ;
+    set SELLER to (extract "(?:Name )(.+)(?:Name).+" from the complete text of NameBlock)  + ", " + 
+    			  (extract "(?:Address )(.+)(?:Address).+" from the complete text of AddressBlock) + ", " + 
+    			   extract "(?:Country )(.+)(?:Country).+" from the complete text of CountryBlock ;
+    set BUYER to (extract  "(?:Name )(?:.+)(?:Name )(.+)(?:Address)" from the complete text of NameBlock)  + ", " + 
+    			  (extract "(?:.*)(?:Address )(?:.+)(?:Address )(.+)" from the complete text of AddressBlock) + ", " + 
+    			  extract  "(?:Country )(?:.+)(?:Country )(.+)" from the complete text of CountryBlock ;
+
+then
+    set the data item value of "Read Point" to SELLER ;
+    set the location of the data item "Read Point" to the location of SELLER in AddressBlock ;  
+    set the data item value of "BizLocation" to SELLER ;
+    set the data item value of "Source" to SELLER ;
+    set the data item value of "Destination" to  BUYER; 			
+    set SellerCountry to extract "(?:Country )(.+)(?:Country).+" from the complete text of CountryBlock ;
+		    								
+    ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

@@ -1,0 +1,15 @@
+body, p, h1, h2, h3, h4, table, td, th, ul, ol, textarea, input {
+	font-family: verdana,helvetica,arial,sans-serif;
+}
+
+body {
+	font-size: 13px;
+	color: #404040;
+	background-color: #f1f1f1;
+	margin: 50px;
+
+input {
+	length: 500px;
+	width: 500px;
+	size: 100;
+}

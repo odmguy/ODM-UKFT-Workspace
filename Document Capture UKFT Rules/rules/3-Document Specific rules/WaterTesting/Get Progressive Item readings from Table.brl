@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Get Progressive Item readings from Table</name>
+  <uuid>c9cca7fe-0f40-4b6d-bbee-262b0c831442</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document' ;
+    set Table to a table in the tables of Page ;
+    set HeaderRow to a table row in the rows of Table
+            where the row ID of this table row is "row_0"
+            and the complete text of the first cell of this table row contains "Chemical Substances" ignoring case  ;
+    set DataRow to a table row in the rows of Table
+            where the row ID of this table row is not "row_0" ;
+if
+	the complete text of the first cell of DataRow contains "Copper"     
+then
+	add message "Copper CAS No. = " + the complete text of the cell at column 2 in DataRow;
+	add message "Copper Foundational = " + the complete text of the cell at column 3 in DataRow;
+	add message "Copper Raw Wastewater (mg/L) = " + the complete text of the cell at column 7 in DataRow;
+	]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

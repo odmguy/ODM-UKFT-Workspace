@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Classification failed</name>
+  <uuid>50fc6a96-4373-42f6-b8f7-4089e0cdc769</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[then
+	add message "Document Classification rules failed to determine the document type";
+    set the data item value of "CLASSIFICATION" to "Failed"; 
+    set the data item details of "CLASSIFICATION" location to "" confidence to "missing" comment to "Document Classification rules failed to determine the document type";  ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

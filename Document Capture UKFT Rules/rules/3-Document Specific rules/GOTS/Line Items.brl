@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Line Items</name>
+  <uuid>2980116f-b98c-4061-bd02-04a7f19f919f</uuid>
+  <documentation><![CDATA[ID of header row is "row_2"]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document' ;
+    set Table to a table in the tables of Page ;
+    set DataRow to a table row in the rows of Table
+            where the number of elements in the cells of this table row is at least 8
+            and the complete text of the first line of the first cell of this table row is not "Sr. No" ;
+    set INV to extract "inv:([A-Z]{3}[0-9]{8})" from the complete text of the cell at column 7 in DataRow  ;
+    set TXN to remove spaces from extract "trns:([A-Z ]{3,4}[0-9]{7,8})" from the complete text of the cell at column 7 in DataRow ;
+    set LineNo to the complete text of the cell at column 1 in DataRow ;
+then
+    add message "Invoice number of Line item " + LineNo + " is " + INV ;
+    add message "Transaction number of Line item " + LineNo + " is " + TXN ;
+    add message "Quantity = " + the complete text of the cell at column 5 in DataRow ;
+    
+    ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

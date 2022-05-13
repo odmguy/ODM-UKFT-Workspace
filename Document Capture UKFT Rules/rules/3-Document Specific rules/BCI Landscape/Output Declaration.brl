@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Output Declaration</name>
+  <uuid>cc0971aa-43db-48df-a57a-0623daa4fd07</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set 'Block' to a block in the blocks of PAGE1  
+       where the complete text of this block contains "status history"  ignoring case ;
+    set 'Order' to extract  "[0-9]{12,15}" from the complete text of Block ;
+if	
+	Order is not empty    
+then
+    set the data item value of "Output Declaration Number" to Order ;
+    set the data item details of "Output Declaration Number" location to the location of Block confidence to "high" comment to "";
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

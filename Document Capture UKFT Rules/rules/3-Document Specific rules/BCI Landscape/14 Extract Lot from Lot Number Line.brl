@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>14 Extract Lot from Lot Number Line</name>
+  <uuid>4d553db2-dd7b-433e-9146-21def906150f</uuid>
+  <documentation><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set Block to a block in the blocks of Page
+            where the complete text of this block starts with "Transaction ref" ;
+    set Line to a line in the lines of Block
+            where the complete text of this line contains "Lot No" ;
+    set LOT to extract NUMBER_REGEX from the complete text of Line ;
+if
+    LOT is not empty
+then
+    set data item "Lot" to LOT ;
+    add message "Lot from rule v3 = " + LOT ;]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Block to a block in the blocks of PAGE1 ;
+    set Line to a line in the lines of Block
+            where the complete text of this line contains any of {"lot number" };
+    set LOT to extract NUMBER_REGEX from the complete text of Line ;
+if
+    LOT is not empty
+then
+    set the data item value of "Lot" to LOT ;
+    set the location of the data item "Lot" to "Page:1"+the location of Block; 
+    set the confidence of the data item "Lot" to "high";
+    set the comment of the data item "Lot" to "Used Lot Number Line rule";
+    add message "Lot from 'Lot Number Line' = " + LOT ;
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

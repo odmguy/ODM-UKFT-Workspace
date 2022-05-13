@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.ruleflow:RuleFlow xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.ruleflow="http://ilog.rules.studio/model/ruleflow.ecore">
+  <name>Ruleflow Looping</name>
+  <uuid>ab9ad351-3ed8-412f-a0e6-6e99f7a38c00</uuid>
+  <locale>en_US</locale>
+  <categories>any</categories>
+  <rfModel>
+<Ruleflow xmlns="http://schemas.ilog.com/Rules/7.0/Ruleflow">
+  <Body>
+    <TaskList>
+      <StartTask Identifier="task_0">
+        <Actions Language="irl"><![CDATA[System.out.println("\n### Starting ContentAnalyzer / ProcessUKFTDocument Looping service - "+projectVersion);
+
+
+
+if (odmResponse_out == null) odmResponse_out = new ODMResponse();
+// -- Copy important CA fields to Response object
+odmResponse_out.analyzerID = document_in.analyzerId;
+odmResponse_out.documentName = document_in.DocumentName + "." + document_in.DocumentExtension;
+odmResponse_out.documentNumPages = document_in.ExtraInformation.pages;
+odmResponse_out.documentClassification = document_in.Classification.DocumentClass.Actual;
+odmResponse_out.documentClassificationConfidence = document_in.Classification.DocumentClass.ClassMatch;
+if (document_in.DSOutput.length > 0) odmResponse_out.ocrAccuracy = document_in.DSOutput[0].OCRAccuracy;
+page1 = document_in.pageList[0];  // -- This saves having to search every page for every rule when often you only need the first page
+
+System.out.println("\n    Document_in.DocumentName = ["+ odmResponse_out.documentName +"]"); 
+System.out.println("    Meta-Data Analyser ID= "+ odmResponse_out.analyzerID); 	
+System.out.println("    Incoming document num pages = "+ odmResponse_out.documentNumPages); 
+System.out.println("    Classification = "+ odmResponse_out.documentClassification); 
+System.out.println("------------ Executing Looping Rules ------------------------");
+
+]]></Actions>
+      </StartTask>
+      <RuleTask ExecutionMode="Sequential" ExitCriteria="None" Identifier="Initial Processing" Ordering="Default">
+        <RuleList>
+          <Package Name="1-Inital Processing"/>
+        </RuleList>
+      </RuleTask>
+      <RuleTask ExecutionMode="Sequential" ExitCriteria="None" Identifier="All Document rules" Ordering="Default">
+        <FinalActions Language="irl"><![CDATA[loopPageIndex = 0;]]></FinalActions>
+        <RuleList>
+          <Package Name="2-All Document Rules"/>
+        </RuleList>
+      </RuleTask>
+      <RuleTask ExecutionMode="Sequential" ExitCriteria="None" Identifier="Final Checks" Ordering="Default">
+        <RuleList>
+          <Package Name="5-Final Checks"/>
+        </RuleList>
+      </RuleTask>
+      <RuleTask ExecutionMode="Sequential" ExitCriteria="None" Identifier="Document Specific rules" Ordering="Default">
+        <InitialActions Language="irl"><![CDATA[loopCurrentPage = document_in.pageList[loopPageIndex];]]></InitialActions>
+        <FinalActions Language="irl"><![CDATA[loopPageIndex = loopPageIndex + 1;]]></FinalActions>
+        <Select Dynamic="true" Language="bal"><![CDATA[the business name of the package name of 'the rule' contains the actual of the document class of the classification of 'the document']]></Select>
+      </RuleTask>
+      <StopTask Identifier="task_2">
+        <Actions Language="irl"><![CDATA[System.out.println("------------ Finished executing rules ----------------------");
+
+System.out.println("### Ended CA Process Document Ruleflow");
+
+
+
+
+
+
+
+
+
+]]></Actions>
+      </StopTask>
+    </TaskList>
+    <NodeList>
+      <TaskNode Identifier="node_3" Task="task_2"/>
+      <TaskNode Identifier="node_1" Task="Initial Processing"/>
+      <TaskNode Identifier="node_4" Task="All Document rules"/>
+      <TaskNode Identifier="node_8" Task="Final Checks"/>
+      <TaskNode Identifier="node_2" Task="Document Specific rules"/>
+      <TaskNode Identifier="node_0" Task="task_0"/>
+    </NodeList>
+    <TransitionList>
+      <Transition Identifier="transition_1" Source="node_1" Target="node_4"/>
+      <Transition Identifier="transition_9" Source="node_8" Target="node_3"/>
+      <Transition Identifier="transition_2" Source="node_4" Target="node_2"/>
+      <Transition Identifier="transition_3" Source="node_2" Target="node_8"/>
+      <Transition Identifier="transition_0" Source="node_0" Target="node_1"/>
+      <Transition Identifier="transition_4" Source="node_2" Target="node_2">
+        <Conditions Language="irl"><![CDATA[loopPageIndex < document_in.pageList.length]]></Conditions>
+      </Transition>
+    </TransitionList>
+  </Body>
+  <Resources>
+    <ResourceSet Locale="en_US">
+      <Data Name="node_4#width">184.05727</Data>
+      <Data Name="node_2#height">40.000046</Data>
+      <Data Name="node_3#height">19.0</Data>
+      <Data Name="node_1#height">40.0</Data>
+      <Data Name="node_4#height">40.0</Data>
+      <Data Name="node_8#x">103.4985</Data>
+      <Data Name="node_0#height">21.0</Data>
+      <Data Name="node_8#y">361.00006</Data>
+      <Data Name="transition_3#label">Done</Data>
+      <Data Name="node_2#name">node_1</Data>
+      <Data Name="node_8#height">40.0</Data>
+      <Data Name="node_2#width">206.997</Data>
+      <Data Name="node_0#width">21.0</Data>
+      <Data Name="node_3#y">440.50006</Data>
+      <Data Name="node_4#x">103.4985</Data>
+      <Data Name="node_4#y">181.0</Data>
+      <Data Name="node_0#x">103.498474</Data>
+      <Data Name="node_1#x">103.498505</Data>
+      <Data Name="node_8#name">node_8</Data>
+      <Data Name="node_0#y">9.699997</Data>
+      <Data Name="node_1#y">91.0</Data>
+      <Data Name="node_2#x">103.4985</Data>
+      <Data Name="node_3#x">103.49848</Data>
+      <Data Name="node_2#y">271.0</Data>
+      <Data Name="transition_4#label">Next Page</Data>
+      <Data Name="node_1#name">node_1</Data>
+      <Data Name="node_3#width">18.999985</Data>
+      <Data Name="node_4#name">node_4</Data>
+      <Data Name="node_8#width">145.64462</Data>
+      <Data Name="node_1#width">170.3158</Data>
+      <Data Name="node_0#name">node_0</Data>
+      <Data Name="node_3#name">node_2</Data>
+    </ResourceSet>
+  </Resources>
+  <Properties>
+    <imports><![CDATA[import baca.Document;
+use document_in;
+use odmResponse_out;
+import java.util.Iterator;
+use projectVersion;
+use loopPageIndex;
+use loopCurrentPage;
+import metadata.ODMResponse;
+]]></imports>
+  </Properties>
+</Ruleflow>
+</rfModel>
+</ilog.rules.studio.model.ruleflow:RuleFlow>

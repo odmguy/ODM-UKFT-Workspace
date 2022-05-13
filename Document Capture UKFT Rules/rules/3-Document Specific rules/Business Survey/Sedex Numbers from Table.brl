@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Sedex Numbers from Table</name>
+  <uuid>4104dbb0-98e2-48c6-8e4e-03c525c49388</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 2 ;
+    set Table to a table in the tables of Page ;
+    set Row to a table row in the rows of Table
+            where the complete text of this table row contains "Sedex" ;
+    set Cell to a cell in the cells of Row
+            where the complete text of the first line of this cell contains any of { "Sedex Company" } ;
+    set SedexCompanyRef to the complete text of cell 2 in Row ;
+    set SedexSiteRef to the complete text of cell 4 in Row ;
+then
+    set the data item value of "Sedex Company Ref" to SedexCompanyRef ;
+    set the data item value of "Sedex Site Ref" to SedexSiteRef  ;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

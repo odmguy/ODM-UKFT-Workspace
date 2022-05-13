@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Place and Date from Table</name>
+  <uuid>17ca869a-0f4f-44f6-a2e8-82d0f8f21312</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document' ;
+    set Table to a table in the tables of Page ;
+    set Row to a table row in the rows of Table ;
+    set Cell to a cell in the cells of Row
+            where the complete text of the first line of this cell contains any of { "signature of the authorised person" } ;
+	set Date to extract DATE_EXPRESSION from the text of line 2 of Cell ;
+	set Line to a line in the lines of Cell where the line ID of this line is "line_1";        
+	set Place to the first word of Line ;
+if
+    Date is not empty
+then
+    set the data item value of "DateDespatched" to Date;
+    set the data item value of "PlaceDespatched" to Place;
+]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

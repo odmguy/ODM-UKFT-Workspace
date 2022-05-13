@@ -1,0 +1,276 @@
+<b2x:translation xmlns:b2x="http://schemas.ilog.com/JRules/1.3/Translation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.ilog.com/JRules/1.3/Translation ilog/rules/schemas/1_3/b2x.xsd">
+    <id>4ba58162-573d-4d3e-b37c-f05938e7ba7e</id>
+    <lang>ARL</lang>
+    <class>
+        <businessName>Helpers_Main</businessName>
+        <executionName>void</executionName>
+        <import>metadata.ODMResponse</import>
+        <import>metadata.DataItem</import>
+        <import>baca.LineItemGroups</import>
+        <import>java.lang.String</import>
+        <import>java.lang.Double</import>
+        <import>java.lang.NumberFormatException</import>
+        <import>java.lang.System</import>
+        <import>java.util.Iterator</import>
+        <import>java.util.regex.Matcher</import>
+        <import>java.util.regex.Pattern</import>
+        <import>java.text.SimpleDateFormat</import>
+        <method>
+            <name>addMessage</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            odmResponse_out.messages.add(msg);
+//System.out.println("~~~ Adding messasge - "+msg);
+            ]]></body>
+        </method>
+        <method>
+            <name>businessName</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            if (arl_string == null || arl_string.equals("")) 
+	return "";
+else	
+	return ilog.rules.brl.IlrNameUtil.getBusinessIdentifier(arl_string);
+            ]]></body>
+        </method>
+        <method>
+            <name>containsAnyOfCaseInsensitive</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String[]"/>
+            <body language="arl"><![CDATA[
+            if (source == null || source.equals(""))
+	return false;
+for (int item = 0;item < targetList.length; item=item+1 ) {
+	if (source.toLowerCase().contains(targetList[item].toLowerCase()) )
+		return true;
+}
+return false;
+            ]]></body>
+        </method>
+        <method>
+            <name>containsCaseInsensitive</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            return source.toLowerCase().contains(target.toLowerCase());
+            ]]></body>
+        </method>
+        <method>
+            <name>containsFuzzy</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            int score = stringContainsFuzzy(source, target);
+//System.out.println("~~@ Helpers.containsFuzzy - score = ["+score+"] fuzzy finding ["+target+"] in - "+source); 
+return score;
+            ]]></body>
+        </method>
+        <method>
+            <name>containsNoneOfCaseInsensitive</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String[]"/>
+            <body language="arl"><![CDATA[
+            if (source == null || source.equals(""))
+	return true;
+
+for (int item = 0;item < targetList.length; item=item+1 ) {
+	if (source.toLowerCase().contains(targetList[item].toLowerCase()) )
+		return false;
+}
+return true;
+            ]]></body>
+        </method>
+        <method>
+            <name>containsWildcard</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            String lowsource = source.toLowerCase();
+int before = lowsource.indexOf(textBefore.toLowerCase());
+int after = lowsource.indexOf(textAfter.toLowerCase(), before+textBefore.length());
+if (before > 0 && after > 0)
+	return true;
+else
+	return false;
+            ]]></body>
+        </method>
+        <method>
+            <name>dataItemGet</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            return odmResponse_out.getDataItem(key);
+            ]]></body>
+        </method>
+        <method>
+            <name>dataItemGetNumeric</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            return odmResponse_out.getItemValueAsNumber(key);
+// -- Returns -999.999 if it does not exist !!!
+            ]]></body>
+        </method>
+        <method>
+            <name>dataItemGetValue</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            return odmResponse_out.getDataItemValue(key);
+//return metaData_inout.getParameterValue(key);
+            ]]></body>
+        </method>
+        <method>
+            <name>dataItemSetDefaults</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            odmResponse_out.setDataItemValue(key, value);
+odmResponse_out.setDataItemDetails(key, "<default>", "high", "<default>"); // -- location/confidence/comment
+            ]]></body>
+        </method>
+        <method>
+            <name>dataItemSetDetails</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            odmResponse_out.setDataItemDetails(itemName, location, confidence, comment);
+            ]]></body>
+        </method>
+        <method>
+            <name>dataItemSetValue</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            odmResponse_out.setDataItemValue(key,value);
+            ]]></body>
+        </method>
+        <method>
+            <name>dateToString</name>
+            <parameter type="java.util.Date"/>
+            <body language="arl"><![CDATA[
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX");
+return sdf.format(date);
+            ]]></body>
+        </method>
+        <method>
+            <name>extractCrossReferenceAfter</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            // -- find the given refName substring in the source string and return the next characters up to the next period or comma
+int start = source.toLowerCase().indexOf(refName.toLowerCase());
+if (start == -1) {
+	System.out.println("~~~ Helpers.extractCrossReference Did not Find Reference in source ["+ refName +"]");
+	return ""; // -- Not found
+}
+start = start + source.length(); // -- Move to end or search string
+String result = "";
+int end = source.indexOf(".", start); // -- Find nearest following period
+if (end > 0 && end - start < 13) { // -- Found  
+	result = source.substring(start, end); 
+	System.out.println("~~~ Helpers.extractCrossReference Found ["+ result +"]");
+	return result;
+}
+// -- No close period so check for comma
+end = source.indexOf(",", start); // -- Find nearest following comma
+if (end > 0 && end - start < 13) { // -- Found  
+	result = source.substring(start, end); 
+	System.out.println("~~~ Helpers.extractCrossReference Found ["+ result +"]");
+	return result;
+}
+return result;
+            ]]></body>
+        </method>
+        <method>
+            <name>extractFirstRegexMatch</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            //System.out.println("Helpers.extractFirstRegexMatch - Trying to find = [" +expression+"] in - "+source);
+Pattern p = Pattern.compile(expression); 
+Matcher m = p.matcher(source);
+if (m.find()) {
+	String match = m.group();
+	if (m.groupCount() > 0) {// -- Return the group rather than the whole match (to remove non capturing groups)
+		match = m.group(1); // -- Groups start at 1 !!!
+	}	
+    //System.out.println("Helpers.extractFirstRegexMatch - result = " +match);
+    return match;
+}
+return "";
+            ]]></body>
+        </method>
+        <method>
+            <name>getAllFollowingIndents</name>
+            <parameter type="baca.Block"/>
+            <body language="arl"><![CDATA[
+            return "";
+            ]]></body>
+        </method>
+        <method>
+            <name>getBoldPhraseInBlock</name>
+            <parameter type="baca.Block"/>
+            <body language="arl"><![CDATA[
+            return "";
+            ]]></body>
+        </method>
+        <method>
+            <name>location</name>
+            <parameter type="baca.Page"/>
+            <parameter type="baca.Block"/>
+            <body language="arl"><![CDATA[
+            return block.BlockID+ " on page "+page.getPageNumber();
+            ]]></body>
+        </method>
+        <method>
+            <name>log</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            System.out.println(message);
+            ]]></body>
+        </method>
+        <method>
+            <name>parseDateString</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            SimpleDateFormat sdf  = new SimpleDateFormat(format); // -- e.g. "dd/MM/yyyy"
+//System.out.println("~~~Helpers.parseDateString "+format+" from "+dateString+" = "+sdf.parse(dateString));
+return sdf.parse(dateString);
+            ]]></body>
+        </method>
+        <method>
+            <name>removeSpaces</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            return source.replaceAll(" ","");
+            ]]></body>
+        </method>
+        <method>
+            <name>stringAsNumber</name>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            if (arg == null || arg.equals("") )
+	return -999.999;
+//return Double.parseDouble(arg);
+try {
+	double d = Double.parseDouble(arg);
+	return d;
+} catch (NumberFormatException nfe) {
+	return -999.999;
+}
+            ]]></body>
+        </method>
+        <method>
+            <name>stringMatchesRegex</name>
+            <parameter type="java.lang.String"/>
+            <parameter type="java.lang.String"/>
+            <body language="arl"><![CDATA[
+            if (regex == null || regex.equals("") || arg == null || arg.equals(""))
+	return false;
+return arg.matches(regex);
+            ]]></body>
+        </method>
+    </class>
+</b2x:translation>

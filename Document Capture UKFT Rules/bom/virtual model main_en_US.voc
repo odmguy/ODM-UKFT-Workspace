@@ -1,0 +1,39 @@
+# Vocabulary Properties
+uuid = 8f4c7d44-20a3-47f9-9e09-77bad87b078d
+
+# Helpers_Main
+Helpers_Main#concept.label = helpers
+Helpers_Main.addMessage(java.lang.String)#phrase.action = add message {0, <message>}
+Helpers_Main.businessName(java.lang.String)#phrase.navigation = the business name of {0}
+Helpers_Main.containsAnyOfCaseInsensitive(java.lang.String,java.lang.String[])#phrase.navigation = {0} contains any of {1}
+Helpers_Main.containsAnyOfCaseInsensitive(java.lang.String,java.lang.String[])#phrase.navigation.documentation = returns true of the source string contains one or more of the target string list.\nCase is ignored so " AA BB CC DD" with return true if searched for ["dd", "ee"]
+Helpers_Main.containsCaseInsensitive(java.lang.String,java.lang.String)#phrase.navigation = {0} contains {1} ignoring case
+Helpers_Main.containsCaseInsensitive(java.lang.String,java.lang.String)#phrase.navigation.documentation = returns true if the source string contains the target string \nregardless of upper and lower case letters
+Helpers_Main.containsFuzzy(java.lang.String,java.lang.String)#phrase.navigation = the fuzzy score of {0, <text>} containing {1, <words>}
+Helpers_Main.containsFuzzy(java.lang.String,java.lang.String)#phrase.navigation.documentation = returns an integer in range 0..10\n10 -> all words matched in same order\n8  -> all words matched in diff order in close proximity\n6  -> all words matched in diff order anywhere\n3  -> at least half the words were found\n1  -> At least one word found\n0  -> zero words were found
+Helpers_Main.containsNoneOfCaseInsensitive(java.lang.String,java.lang.String[])#phrase.navigation = {0} contains none of {1}
+Helpers_Main.containsNoneOfCaseInsensitive(java.lang.String,java.lang.String[])#phrase.navigation.documentation = returns true of the source string contains none of the target string list.\nCase is ignored so " AA BB CC DD" with return false if searched for ["dd", "ee"]
+Helpers_Main.containsWildcard(java.lang.String,java.lang.String,java.lang.String)#phrase.navigation = {0} contains {1} before {2}
+Helpers_Main.dataItemGet(java.lang.String)#phrase.navigation = the data item {0}
+Helpers_Main.dataItemGet(java.lang.String)#phrase.navigation.documentation = Gets the Data Item with the provided key name.\nThis returns null if no such item exists to stop matches in rule definitions.\nSo be careful if used in conditions or actions if not checked.
+Helpers_Main.dataItemGetNumeric(java.lang.String)#phrase.navigation = the value of data item {0, <paramname>} as number
+Helpers_Main.dataItemGetNumeric(java.lang.String)#phrase.navigation.documentation = Converts the string value of the DataItem to a number type. If the Item does not exist then it will return -999.999 which may cause unexpected behaviours.
+Helpers_Main.dataItemGetValue(java.lang.String)#phrase.navigation = the value of data item {0, <item name>}
+Helpers_Main.dataItemGetValue(java.lang.String)#phrase.navigation.documentation = Returns the value of the Data Item if it exists otherwise it will return an empty string "" or null depending on the internal flag
+Helpers_Main.dataItemSetDefaults(java.lang.String,java.lang.String)#phrase.action = set data item {0, <item name>} default value to {1, <value>}
+Helpers_Main.dataItemSetDefaults(java.lang.String,java.lang.String)#phrase.action.documentation = Sets the value of the Data Item but also sets the confidence to high, location to "default" and coment to "default"
+Helpers_Main.dataItemSetDetails(java.lang.String,java.lang.String,java.lang.String,java.lang.String)#phrase.action = set the data item details of {0} location to {1} confidence to {2} comment to {3}
+Helpers_Main.dataItemSetValue(java.lang.String,java.lang.String)#phrase.action = set the data item value  of {0, <item name>} to {1, <value>}
+Helpers_Main.dataItemSetValue(java.lang.String,java.lang.String)#phrase.action.documentation = Set the 'value' of the DataItem with name 'item name'. If it does not exist already then it will create a new DataItem in the list\n
+Helpers_Main.dateToString(java.util.Date)#phrase.navigation = {0} as a string
+Helpers_Main.extractCrossReferenceAfter(java.lang.String,java.lang.String)#phrase.navigation = the reference {1} from {0}
+Helpers_Main.extractFirstRegexMatch(java.lang.String,java.lang.String)#phrase.navigation = extract {0, <expression>} from {1}
+Helpers_Main.extractFirstRegexMatch(java.lang.String,java.lang.String)#phrase.navigation.documentation = Returns the first match of the expression in the text. If not found then it returns empty string "" which means that this will match true in a Definitions section even if no match is found!!
+Helpers_Main.getBoldPhraseInBlock(baca.Block)#phrase.navigation = the bold phrase TODO in {0}
+Helpers_Main.location(baca.Page,baca.Block)#phrase.navigation = location {1, <block>} {0, <page>} 
+Helpers_Main.log(java.lang.String)#phrase.action = log {0}
+Helpers_Main.parseDateString(java.lang.String,java.lang.String)#phrase.navigation = parse {0} using {1, <e.g. dd/MM/yyyy>}
+Helpers_Main.parseDateString(java.lang.String,java.lang.String)#phrase.navigation.documentation = Parse a date in the string into a Date object using the provided format. An Exception will occur if the parsing fails
+Helpers_Main.removeSpaces(java.lang.String)#phrase.navigation = remove spaces from {0}
+Helpers_Main.stringAsNumber(java.lang.String)#phrase.navigation = {0} as a number
+Helpers_Main.stringMatchesRegex(java.lang.String,java.lang.String)#phrase.navigation = {0} matches {1, <regular expression>}

@@ -1,0 +1,222 @@
+# Vocabulary Properties
+uuid = d9c00e25-7651-4f90-a17e-90eefbcc8a2a
+
+# baca.Block
+baca.Block#concept.label = block
+baca.Block.BlockHeight#phrase.navigation = {block height} of {this}
+baca.Block.BlockID#phrase.navigation = {block ID} of {this}
+baca.Block.BlockStartX#phrase.navigation = {block start X} of {this}
+baca.Block.BlockStartY#phrase.navigation = {block start Y} of {this}
+baca.Block.BlockWidth#phrase.navigation = {block width} of {this}
+baca.Block.LineList#phrase.navigation = {line} of {this}
+baca.Block.getCompleteText()#phrase.navigation = {complete text} of {this}
+baca.Block.getFirstLine()#phrase.navigation = {first line} of {this}
+baca.Block.getFirstLineText()#phrase.navigation = {first line text} of {this}
+baca.Block.getIndexOfLine(baca.Line)#phrase.navigation = the index of {0} in {this}
+baca.Block.getIndexOfLine(baca.Line)#phrase.navigation.documentation = Returns the position index (0..n-1) of the line with the line list of the block
+baca.Block.getLocation()#phrase.navigation = {location} of {this}
+baca.Block.getNumberOfLines()#phrase.navigation = {number of lines} of {this}
+baca.Block.getNumberOfWords()#phrase.navigation = {number of words} of {this}
+baca.Block.getTextConfidence(java.lang.String)#phrase.navigation = the confidence of {0, <phrase>} in {this}
+baca.Block.getTextLocation(java.lang.String)#phrase.navigation = the location of {0} in {this}
+baca.Block.getTextLocation(java.lang.String)#phrase.navigation.documentation = Returns the minimal bounding box of the phrase as "[X,Y,W,H]"
+baca.Block.lineXText(int)#phrase.navigation = the text of line {0} of {this}
+baca.Block.lineXText(int)#phrase.navigation.documentation = Returns all the Words of the chosen line (in range 1..n) concatenated together into a single string. An empty string is returned if any empty lists or bad line number is used.
+
+# baca.Cell
+baca.Cell#concept.label = cell
+baca.Cell.LineList#phrase.navigation = {line} of {this}
+baca.Cell.getCompleteText()#phrase.navigation = {complete text} of {this}
+baca.Cell.getFirstLine()#phrase.navigation = {first line} of {this}
+baca.Cell.lineXText(int)#phrase.navigation = the text of line {0} of {this}
+baca.Cell.lineXText(int)#phrase.navigation.documentation = Returns all the Words of the chosen line (in range 1..n) concatenated together into a single string. An empty string is returned if any empty lists or bad line number is used.
+
+# baca.Classification
+baca.Classification#concept.label = classification
+baca.Classification.DocumentClass#phrase.navigation = {document class} of {this}
+baca.Classification.warnings#phrase.navigation = {warning} of {this}
+
+# baca.Document
+baca.Document#concept.label = document
+baca.Document.Classification#phrase.action = set the classification of {this} to {classification}
+baca.Document.Classification#phrase.navigation = {classification} of {this}
+baca.Document.DSOutput#phrase.navigation = {DSOutput} of {this}
+baca.Document.DocumentArrivalTime#phrase.navigation = {document arrival time} of {this}
+baca.Document.DocumentExtension#phrase.navigation = {document extension} of {this}
+baca.Document.DocumentName#phrase.navigation = {document name} of {this}
+baca.Document.DocumentOCRConfidence#phrase.navigation = {document OCRConfidence} of {this}
+baca.Document.ErrorList#phrase.navigation = {error} of {this}
+baca.Document.ExtraInformation#phrase.navigation = {extra information} of {this}
+baca.Document.analyzerId#phrase.navigation = {analyzer id} of {this}
+baca.Document.createDate#phrase.navigation = {create date} of {this}
+baca.Document.getActualClassification()#phrase.navigation = {actual classification} of {this}
+baca.Document.getCompleteText()#phrase.navigation = {complete text} of {this}
+baca.Document.getNumberOfPages()#phrase.navigation = {number of pages} of {this}
+baca.Document.pageList#phrase.navigation = {page} of {this}
+
+# baca.DocumentClass
+baca.DocumentClass#concept.label = document class
+baca.DocumentClass.Actual#phrase.action = set the actual of {this} to {actual}
+baca.DocumentClass.Actual#phrase.navigation = {actual} of {this}
+baca.DocumentClass.Confidence#phrase.navigation = {confidence} of {this}
+baca.DocumentClass.ID#phrase.navigation = {ID} of {this}
+
+# baca.KVP
+baca.KVP#concept.label = KVP
+baca.KVP.Key#phrase.action = set the key of {this} to {key}
+baca.KVP.Key#phrase.navigation = {key} of {this}
+baca.KVP.KeyClass#phrase.action = set the key class of {this} to {key class}
+baca.KVP.KeyClass#phrase.navigation = {key class} of {this}
+baca.KVP.KeyClassConfidence#phrase.action = set the key class confidence of {this} to {key class confidence}
+baca.KVP.KeyClassConfidence#phrase.navigation = {key class confidence} of {this}
+baca.KVP.KeyConfidence#phrase.action = set the key confidence of {this} to {key confidence}
+baca.KVP.KeyConfidence#phrase.navigation = {key confidence} of {this}
+baca.KVP.Mandatory#phrase.action = set the mandatory of {this} to {mandatory}
+baca.KVP.Mandatory#phrase.navigation = {mandatory} of {this}
+baca.KVP.PageNumber#phrase.action = set the page number of {this} to {page number}
+baca.KVP.PageNumber#phrase.navigation = {page number} of {this}
+baca.KVP.Value#phrase.action = set the value of {this} to {value}
+baca.KVP.Value#phrase.navigation = {value} of {this}
+baca.KVP.ValueConfidence#phrase.action = set the value confidence of {this} to {value confidence}
+baca.KVP.ValueConfidence#phrase.navigation = {value confidence} of {this}
+
+# baca.Line
+baca.Line#concept.label = line
+baca.Line.LineID#phrase.navigation = {line ID} of {this}
+baca.Line.WordList#phrase.navigation = {word} of {this}
+baca.Line.getCompleteText()#phrase.navigation = {complete text} of {this}
+baca.Line.getFirstUnderlinedPhrase()#phrase.navigation = {first underlined phrase} of {this}
+baca.Line.getFirstWord()#phrase.navigation = {first word} of {this}
+
+# baca.LineHeaderAttributes
+baca.LineHeaderAttributes#concept.label = line header attributes
+baca.LineHeaderAttributes.HeaderClass#phrase.navigation = {header class} of {this}
+baca.LineHeaderAttributes.HeaderConfidence#phrase.navigation = {header confidence} of {this}
+baca.LineHeaderAttributes.HeaderText#phrase.navigation = {header text} of {this}
+baca.LineHeaderAttributes.toString()#phrase.navigation = {this}.toString()
+
+# baca.LineItem
+baca.LineItem#concept.label = line item
+baca.LineItem.KVPs#phrase.navigation = {KVP} of {this}
+baca.LineItem.LineItemID#phrase.navigation = {line item ID} of {this}
+
+# baca.LineItemGroup
+baca.LineItemGroup#concept.label = line item group
+baca.LineItemGroup.LineItemGroupID#phrase.navigation = {line item group ID} of {this}
+baca.LineItemGroup.LineItems#phrase.navigation = {line item} of {this}
+baca.LineItemGroup.cellValue(int,int)#phrase.navigation = {this}.cellValue({0}, {1})
+baca.LineItemGroup.cellValueFromHeader(int,java.lang.String)#phrase.navigation = {this}.cellValueFromHeader({0}, {1})
+baca.LineItemGroup.numberOfColumns()#phrase.navigation = {this}.numberOfColumns()
+baca.LineItemGroup.numberOfRows()#phrase.navigation = {this}.numberOfRows()
+
+# baca.LineItemValue
+baca.LineItemValue#concept.label = line item value
+baca.LineItemValue.Key#phrase.navigation = {key} of {this}
+baca.LineItemValue.Value#phrase.navigation = {value} of {this}
+
+# baca.Page
+baca.Page#concept.label = page
+baca.Page.BarcodeList#phrase.navigation = {barcode} of {this}
+baca.Page.BlockList#phrase.navigation = {block} of {this}
+baca.Page.HeaderList#phrase.navigation = {header} of {this}
+baca.Page.KVPTable#phrase.navigation = {KVPTable} of {this}
+baca.Page.PageInfo#phrase.navigation = {page info} of {this}
+baca.Page.TableLineItems#phrase.navigation = {table line item} of {this}
+baca.Page.TableList#phrase.navigation = {table} of {this}
+baca.Page.blocksHaveSameIndentation(baca.Block,baca.Block)#phrase.navigation = blocks {0} and {1} have same indentation on {this}
+baca.Page.blocksHaveSameWidth(baca.Block,baca.Block)#phrase.navigation = blocks {0} and {1} have same width on {this}
+baca.Page.getBlockIndex(baca.Block)#phrase.navigation = the index of {0} on {this}
+baca.Page.getCompleteText()#phrase.navigation = {complete text} of {this}
+baca.Page.getPageNumber()#phrase.navigation = {page number} of {this}
+baca.Page.nextBlock(baca.Block)#phrase.navigation = the following block to {0} on {this}
+baca.Page.nextContinuingParagraph(baca.Block,baca.Document)#phrase.navigation = the next continuing paragraph to {0, <block>} on {this} in {1, <doc>}
+
+# baca.PageInfo
+baca.PageInfo#concept.label = page info
+baca.PageInfo.PageID#phrase.navigation = {page ID} of {this}
+baca.PageInfo.PageNo#phrase.navigation = {page no} of {this}
+
+# baca.Table
+baca.Table#concept.label = table
+baca.Table.RowList#phrase.navigation = {row} of {this}
+baca.Table.TableID#phrase.navigation = {table ID} of {this}
+baca.Table.TableWidth#phrase.navigation = {table width} of {this}
+baca.Table.getCellToRight(int,baca.Cell,baca.TableRow)#phrase.navigation = {this}.getCellToRight({0}, {1}, {2})
+baca.Table.getFirstRow()#phrase.navigation = {first row} of {this}
+baca.Table.getLastRow()#phrase.navigation = {last row} of {this}
+baca.Table.getRowX(int)#phrase.navigation = {this}.getRowX({0})
+
+# baca.TableLineItems
+baca.TableLineItems#concept.label = table line items
+baca.TableLineItems.LineItemGroups#phrase.navigation = {line item group} of {this}
+baca.TableLineItems.TableID#phrase.navigation = {table ID} of {this}
+
+# baca.TableRow
+baca.TableRow#concept.label = table row
+baca.TableRow.CellList#phrase.navigation = {cell} of {this}
+baca.TableRow.RowID#phrase.navigation = {row ID} of {this}
+baca.TableRow.getCellFromIndex(int)#phrase.navigation = the cell at column {0} in {this}
+baca.TableRow.getCompleteText()#phrase.navigation = {complete text} of {this}
+baca.TableRow.getCompleteTextOfCell(int)#phrase.navigation = the complete text of cell {0} in {this}
+baca.TableRow.getCompleteTextOfCell(int)#phrase.navigation.documentation = Gets the text of all lines in the selected cell using business numbering. So asking for the first cell '1' text will look for a cell with CellID "cell_0"
+baca.TableRow.getFirstCell()#phrase.navigation = {first cell} of {this}
+baca.TableRow.getIndex()#phrase.navigation = {index} of {this}
+baca.TableRow.getIndex()#phrase.navigation.documentation = Gets the business index of the row from the rowID e.g. 'row_0' returns 1
+baca.TableRow.getIndexOfCell(baca.Cell)#phrase.navigation = the index of {0, <cell>} in {this} 
+baca.TableRow.getLocation()#phrase.navigation = {location} of {this}
+baca.TableRow.getNextCell(baca.Cell)#phrase.navigation = the next cell to {0, <cell>} in {this}
+
+# baca.Word
+baca.Word#concept.label = word
+baca.Word.WordHeight#phrase.action = set the word height of {this} to {word height}
+baca.Word.WordHeight#phrase.navigation = {word height} of {this}
+baca.Word.WordID#phrase.action = set the word ID of {this} to {word ID}
+baca.Word.WordID#phrase.navigation = {word ID} of {this}
+baca.Word.WordOCRConfidence#phrase.action = set the word OCRConfidence of {this} to {word OCRConfidence}
+baca.Word.WordOCRConfidence#phrase.navigation = {word OCRConfidence} of {this}
+baca.Word.WordValue#phrase.action = set the word value of {this} to {word value}
+baca.Word.WordValue#phrase.navigation = {word value} of {this}
+baca.Word.bold#phrase.action = set the bold of {this} to {bold}
+baca.Word.bold#phrase.navigation = {bold} of {this}
+baca.Word.isVerticallyAligned(baca.Word)#phrase.navigation = {this}.isVerticallyAligned({0})
+baca.Word.italic#phrase.action = set the italic of {this} to {italic}
+baca.Word.italic#phrase.navigation = {italic} of {this}
+baca.Word.underlined#phrase.action = set the underlined of {this} to {underlined}
+baca.Word.underlined#phrase.navigation = {underlined} of {this}
+
+# metadata.DataItem
+metadata.DataItem#concept.label = data item
+metadata.DataItem.comment#phrase.action = set the comment of {this} to {comment}
+metadata.DataItem.comment#phrase.navigation = {comment} of {this}
+metadata.DataItem.confidence#phrase.action = set the confidence of {this} to {confidence}
+metadata.DataItem.confidence#phrase.navigation = {confidence} of {this}
+metadata.DataItem.key#phrase.action = set the key of {this} to {key}
+metadata.DataItem.key#phrase.navigation = {key} of {this}
+metadata.DataItem.location#phrase.action = set the location of {this} to {location}
+metadata.DataItem.location#phrase.navigation = {location} of {this}
+metadata.DataItem.value#phrase.action = set the value of {this} to {value}
+metadata.DataItem.value#phrase.navigation = {value} of {this}
+
+# metadata.ODMResponse
+metadata.ODMResponse#concept.label = ODMResponse
+metadata.ODMResponse.analyzerID#phrase.action = set the analyzer ID of {this} to {analyzer ID}
+metadata.ODMResponse.analyzerID#phrase.navigation = {analyzer ID} of {this}
+metadata.ODMResponse.dataItemList#phrase.navigation = {data item} of {this}
+metadata.ODMResponse.documentClassification#phrase.action = set the document classification of {this} to {document classification}
+metadata.ODMResponse.documentClassification#phrase.navigation = {document classification} of {this}
+metadata.ODMResponse.documentClassificationConfidence#phrase.action = set the document classification confidence of {this} to {document classification confidence}
+metadata.ODMResponse.documentClassificationConfidence#phrase.navigation = {document classification confidence} of {this}
+metadata.ODMResponse.documentName#phrase.action = set the document name of {this} to {document name}
+metadata.ODMResponse.documentName#phrase.navigation = {document name} of {this}
+metadata.ODMResponse.documentNumPages#phrase.action = set the document num pages of {this} to {document num pages}
+metadata.ODMResponse.documentNumPages#phrase.navigation = {document num pages} of {this}
+metadata.ODMResponse.errorsOccurred#phrase.action = make it {errors occurred} that {this} is errors occurred
+metadata.ODMResponse.errorsOccurred#phrase.navigation = {this} is errors occurred
+metadata.ODMResponse.getNewUUID()#phrase.navigation = the new UUID
+metadata.ODMResponse.messages#phrase.navigation = {message} of {this}
+metadata.ODMResponse.ocrAccuracy#phrase.action = set the ocr accuracy of {this} to {ocr accuracy}
+metadata.ODMResponse.ocrAccuracy#phrase.navigation = {ocr accuracy} of {this}
+metadata.ODMResponse.overallResult#phrase.action = set the overall result of {this} to {overall result}
+metadata.ODMResponse.overallResult#phrase.navigation = {overall result} of {this}
+metadata.ODMResponse.processingDate#phrase.action = set the processing date of {this} to {processing date}
+metadata.ODMResponse.processingDate#phrase.navigation = {processing date} of {this}

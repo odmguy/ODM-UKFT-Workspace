@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.ibm.rules.studio.model.decisionservice:Operation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.ibm.rules.studio.model.decisionservice="http://com.ibm.rules.studio/model/decisionservice.ecore" xmlns:ilog.rules.studio.model.query.extractor="http://ilog.rules.studio/model/query/extractor.ecore" rulesetName="ProcessUKFTDocument" usingRuleflow="true" ruleflowName="Ruleflow" usingExtractor="true" targetRuleProjectName="Document Capture UKFT Rules">
+  <name>Operation Process Document</name>
+  <uuid>3f4870ea-c2bc-4286-9fb9-045730319785</uuid>
+  <description><![CDATA[Process a Content Analyser JSON output file using rules to extract the required data items into a dynamic value list and paragraphs into a MetaData output object.
+** UK Fashion and Textile version **
+Andrew Macdonald - macdonald@uk.ibm.com
+March 2022]]></description>
+  <referencedVariables variableName="document_in" variableSetName="Variables">
+    <variableSet href="../rules/Variables.var#e2280a3f-c1d5-4f35-b0e7-816af93989c5"/>
+  </referencedVariables>
+  <referencedVariables variableName="odmResponse_out" variableSetName="Variables" direction="OUT">
+    <variableSet href="../rules/Variables.var#e2280a3f-c1d5-4f35-b0e7-816af93989c5"/>
+  </referencedVariables>
+  <ruleflow href="../rules/Ruleflow.rfl#af2db780-7ee3-4680-92f7-1a772886657b"/>
+  <extractor xsi:type="ilog.rules.studio.model.query.extractor:QueryExtractor" name="Operation LIBOR Triage New_extractor" validator="Default Validator"/>
+  <targetRuleProject href="../../Document%20Capture%20UKFT%20Rules#da627db4-4c88-4a8e-aa06-f09d29d64433"/>
+</com.ibm.rules.studio.model.decisionservice:Operation>

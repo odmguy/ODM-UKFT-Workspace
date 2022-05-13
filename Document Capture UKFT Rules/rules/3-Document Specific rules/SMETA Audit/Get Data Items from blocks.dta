@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.dt:DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.dt="http://ilog.rules.studio/model/dt.ecore">
+  <name>Get Data Items from blocks</name>
+  <uuid>a9fe770e-9ad9-4f42-909a-200cd183640c</uuid>
+  <locale>en_US</locale>
+  <definition>
+<DT Version="7.0" xmlns="http://schemas.ilog.com/Rules/7.0/DecisionTable">
+  <Body>
+    <Properties>
+      <Property Name="UI.AutoResizeTable" Type="xs:boolean"><![CDATA[false]]></Property>
+      <Property Name="UI.ShowRuleView" Type="xs:boolean"><![CDATA[true]]></Property>
+    </Properties>
+    <Preconditions>
+      <Text><![CDATA[definitions 
+	set Page to a page in the pages of 'the document';
+	set Block to a block in the blocks of Page ; 
+	set Text to the complete text of Block ; ]]></Text>
+    </Preconditions>
+    <Structure>
+      <ConditionDefinitions>
+        <ConditionDefinition Id="C0">
+          <ExpressionDefinition>
+            <Text><![CDATA[Text contains any of <strings>]]></Text>
+          </ExpressionDefinition>
+        </ConditionDefinition>
+        <ConditionDefinition Id="C1">
+          <ExpressionDefinition>
+            <Text><![CDATA[Text contains none of <strings>]]></Text>
+          </ExpressionDefinition>
+        </ConditionDefinition>
+      </ConditionDefinitions>
+      <ActionDefinitions>
+        <ActionDefinition Id="A0">
+          <ExpressionDefinition>
+            <Text><![CDATA[set the data item value of <item name>  to extract "(?:"+<a string>+" ?)(.+?)(?: ?"+<a string>+")"  from Text]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+        <ActionDefinition Id="A1">
+          <ExpressionDefinition>
+            <Text><![CDATA[set the location of the data item <a string> to "Page "+the page number of Page  + ":"+ the location of Block]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+      </ActionDefinitions>
+    </Structure>
+    <Contents>
+      <Partition DefId="C0">
+        <Condition>
+          <Expression>
+            <Param><![CDATA[{ "Water Volume Recycled:" }]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["Water Volume Recycled"]]></Param>
+                <Param><![CDATA["Water Volume Recycled:"]]></Param>
+                <Param><![CDATA["0"]]></Param>
+              </Expression>
+            </Action>
+            <Action DefId="A1">
+              <Expression>
+                <Param><![CDATA["Water Volume Recycled"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+        <Condition>
+          <Expression>
+            <Param><![CDATA[{ "Gas Usage:" }]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["Gas Usage"]]></Param>
+                <Param><![CDATA["Gas Usage:"]]></Param>
+                <Param><![CDATA["/hrs"]]></Param>
+              </Expression>
+            </Action>
+            <Action DefId="A1">
+              <Expression>
+                <Param><![CDATA["Gas Usage"]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+      </Partition>
+    </Contents>
+  </Body>
+  <Resources DefaultLocale="en_US">
+    <ResourceSet Locale="en_US">
+      <Data Name="Definitions(A0)#HeaderText"><![CDATA[set Data Item to extract <expression> ]]></Data>
+      <Data Name="Definitions(A0)#Width"><![CDATA[662]]></Data>
+      <Data Name="Definitions(A0)[1]#HeaderText"><![CDATA[Prefix]]></Data>
+      <Data Name="Definitions(A0)[2]#HeaderText"><![CDATA[Suffix]]></Data>
+      <Data Name="Definitions(A1)#HeaderText"><![CDATA[Set Location]]></Data>
+      <Data Name="Definitions(A1)#Width"><![CDATA[295]]></Data>
+      <Data Name="Definitions(C0)#HeaderText"><![CDATA[Block contains any of]]></Data>
+      <Data Name="Definitions(C0)#Width"><![CDATA[235]]></Data>
+      <Data Name="Definitions(C1)#HeaderText"><![CDATA[Block does NOT contain]]></Data>
+      <Data Name="Definitions(C1)#Width"><![CDATA[184]]></Data>
+    </ResourceSet>
+  </Resources>
+</DT>
+</definition>
+</ilog.rules.studio.model.dt:DecisionTable>

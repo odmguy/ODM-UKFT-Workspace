@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Country of Dispatch from Table</name>
+  <uuid>245edef1-a504-44e5-9efb-10e5e70b14cd</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document' ;
+    set Table to a table in the tables of Page ;
+    set Row to a table row in the rows of Table ;
+    set Cell to a cell in the cells of Row
+            where the complete text of this cell contains any of { "Country of dispatch" , "Country of despatch" } ;
+	set Line to a line in the lines of Cell where the line ID of this line is "line_1";            
+then
+    set the data item value of "CountryOfDispatch" to the complete text of Line ; ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

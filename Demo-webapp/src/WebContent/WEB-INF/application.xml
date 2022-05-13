@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN" "http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+  <display-name>questionnaire-demo-webapp</display-name>
+  <description>ODM Dynamic Questionnaire demo web application</description>
+  <module>
+    <web>
+      <web-uri>questionnaire-demo.war</web-uri>
+      <context-root>questionnaire-demo</context-root>
+    </web>
+  </module>
+</application>

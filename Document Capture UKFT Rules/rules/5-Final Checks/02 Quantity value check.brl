@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>02 Quantity value check</name>
+  <uuid>8fcd64db-cdd6-4b0f-b98a-3bec6e811c1d</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Item to a data item in the data items of 'the response'
+            where the key of this data item is "Quantity"
+            and the value of this data item as a number is more than 500,000 ; 
+then
+    set the confidence of Item to "low" ;
+    set the comment of Item to "Value is over 500,000 so may be incorrect";]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

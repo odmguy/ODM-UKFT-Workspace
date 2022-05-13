@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>12 Quantity from BCCU Line</name>
+  <uuid>5abd5cc6-ff02-42a0-ada1-2a7ec1fc46f2</uuid>
+  <documentation><![CDATA[    set Line to a line in the lines of Block 
+            where the complete text of this line contains "BCCU" ;		]]></documentation>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document'
+            where the page number of this page is 1 ;
+    set Block to a block in the blocks of Page ;
+    set Line to a line in the lines of Block
+            where the complete text of this line contains "BCCU";
+    set QUANTITY to extract "([0-9]{2,})" from the complete text of Line;
+if
+    QUANTITY is not empty
+then
+    set the data item value of "Quantity" to QUANTITY ;
+    set the confidence of the data item "Quantity" to the confidence of QUANTITY in Block ; 
+    add message "Quantity v1 = " + QUANTITY + " with a confidence of " + the confidence of the data item "Quantity";
+    ]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

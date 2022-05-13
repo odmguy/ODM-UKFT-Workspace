@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.brl:ActionRule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.brl="http://ilog.rules.studio/model/brl.ecore">
+  <name>Certificate Reference Number</name>
+  <uuid>8d1de3ec-12ee-494e-b146-eb375f172942</uuid>
+  <locale>en_US</locale>
+  <definition><![CDATA[definitions
+    set Page to a page in the pages of 'the document' ;
+    set Table to a table in the tables of Page ;
+    set Row to a table row in the rows of Table ;
+    set Cell to a cell in the cells of Row
+            where the complete text of the first line of this cell contains any of { "Reference number of the certificate" } ;
+	set REF to extract "([0-9]{6}/[0-9]{8})" from the text of line 1 of Cell ;            
+if
+    the value of data item "CertificateReference" is ""
+    and REF is not empty
+then
+    set the data item value of "CertificateReference" to REF;]]></definition>
+</ilog.rules.studio.model.brl:ActionRule>

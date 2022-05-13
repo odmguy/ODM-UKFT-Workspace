@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ilog.rules.studio.model.dt:DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ilog.rules.studio.model.dt="http://ilog.rules.studio/model/dt.ecore">
+  <name>01-Define Required SMETA Data Items</name>
+  <uuid>2e440a8b-a3a8-43fb-af4b-a3ebc064e88e</uuid>
+  <locale>en_US</locale>
+  <definition>
+<DT Version="7.0" xmlns="http://schemas.ilog.com/Rules/7.0/DecisionTable">
+  <Body>
+    <Properties>
+      <Property Name="UI.AutoResizeTable" Type="xs:boolean"><![CDATA[false]]></Property>
+    </Properties>
+    <Structure>
+      <ConditionDefinitions>
+        <ConditionDefinition Id="C2">
+          <Properties>
+            <Property Name="Check.Expression" Type="xs:boolean"><![CDATA[false]]></Property>
+            <Property Name="Check.Gap" Type="xs:boolean"><![CDATA[false]]></Property>
+            <Property Name="Check.Overlap" Type="xs:boolean"><![CDATA[false]]></Property>
+          </Properties>
+          <ExpressionDefinition>
+            <Text><![CDATA[true is <a boolean>]]></Text>
+          </ExpressionDefinition>
+        </ConditionDefinition>
+      </ConditionDefinitions>
+      <ActionDefinitions>
+        <ActionDefinition Id="A0">
+          <ExpressionDefinition>
+            <Text><![CDATA[set the data item details of <a string> location to "" confidence to "missing" comment to ""]]></Text>
+          </ExpressionDefinition>
+        </ActionDefinition>
+      </ActionDefinitions>
+    </Structure>
+    <Contents>
+      <Partition DefId="C2">
+        <Condition>
+          <Expression>
+            <Param><![CDATA[false]]></Param>
+          </Expression>
+          <ActionSet>
+            <Action DefId="A0">
+              <Expression>
+                <Param><![CDATA["Copper CAS No."]]></Param>
+              </Expression>
+            </Action>
+          </ActionSet>
+        </Condition>
+      </Partition>
+    </Contents>
+  </Body>
+  <Resources DefaultLocale="en_US">
+    <ResourceSet Locale="en_US">
+      <Data Name="Definitions(A0)#HeaderText"><![CDATA[Define Data Item]]></Data>
+      <Data Name="Definitions(A0)#Width"><![CDATA[327]]></Data>
+      <Data Name="Definitions(C2)#HeaderText"><![CDATA[Active?]]></Data>
+      <Data Name="Definitions(C2)#Width"><![CDATA[160]]></Data>
+    </ResourceSet>
+  </Resources>
+</DT>
+</definition>
+</ilog.rules.studio.model.dt:DecisionTable>
